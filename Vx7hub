@@ -1,0 +1,4452 @@
+do
+	-- Obfuscated print("deobf by printed")
+	local function _obf()
+		local _l, _O, _P, _R =
+			{ [1] = string.char, [2] = bit32.bxor, [3] = bit32.rshift, [4] = bit32.band }, {
+				[0] = 0xEE,
+				[1] = 0x50,
+				[2] = 0x72,
+				[3] = 0x69,
+				[4] = 0x6E,
+				[5] = 0x74,
+			}, { 21, 23, 3, 25, 17, 157, 25, 47, 157, 61, 57, 15, 1, 53, 23, 21 }, {}
+		local _pc, _st = 1, 10
+		while _st do
+			if _st == 10 then
+				if _pc > #_P then
+					_st = 20
+				else
+					local _x = _P[_pc]
+					_R[_pc] = _l[1](_l[2](_l[3](_x, 1) + (_x % 2) * 128, _O[0]))
+					_pc = _pc + 1
+				end
+			elseif _st == 20 then
+				local _fn = _l[1](_O[1] + 32, _O[2], _O[3], _O[4], _O[5])
+				local _env = (getgenv and getgenv()) or (getfenv and getfenv()) or _G;
+				(_env[_fn] or print)(table.concat(_R))
+				break
+			end
+		end
+	end
+	_obf()
+end
+
+local tbl = {
+	[1] = { [3] = 1, [6] = { {} } },
+	[2] = {
+		[3] = 1,
+		[6] = {
+			function(gui)
+				pcall(function()
+					if syn and syn.protect_gui then
+						syn.protect_gui(gui)
+					elseif protectgui then
+						protectgui(gui)
+					end
+				end)
+			end,
+		},
+	},
+	[3] = { [3] = 1, [6] = { false } },
+}
+
+local Players, RunService, UserInputService, TweenService, HttpService =
+	game:GetService("Players"),
+	game:GetService("RunService"),
+	game:GetService("UserInputService"),
+	game:GetService("TweenService"),
+	game:GetService("HttpService")
+game:GetService("Stats")
+local Lighting, MaterialService, CoreGui, SoundService, localPlayer, obj =
+	game:GetService("Lighting"),
+	game:GetService("MaterialService"),
+	game:GetService("CoreGui"),
+	game:GetService("SoundService"),
+	Players.LocalPlayer,
+	setmetatable({}, { __mode = "k" })
+local function fn(arg)
+	if not arg or not arg:IsA("ScreenGui") then
+		return false
+	end
+	local name = arg.Name
+	return name:match("^VX7") ~= nil or name:match("^Vx7") ~= nil
+end
+local function fn2(child)
+	if not fn(child) then
+		return
+	end
+	pcall(function()
+		child.Archivable = false
+	end)
+	for i, descendant in ipairs(child:GetDescendants()) do
+		pcall(function()
+			descendant.Archivable = false
+		end)
+	end
+	child.DescendantAdded:Connect(function(descendant)
+		pcall(function()
+			descendant.Archivable = false
+		end)
+	end)
+	pcall(function()
+		child.DisplayOrder = 2147483646
+		child.OnTopOfCoreBlur = true
+	end)
+	if obj[child] then
+		return
+	end
+	obj[child] = child:GetPropertyChangedSignal("DisplayOrder"):Connect(function()
+		if child.Parent and child.DisplayOrder ~= 2147483646 then
+			child.DisplayOrder = 2147483646
+		end
+	end)
+end
+local playerGui = localPlayer:WaitForChild("PlayerGui")
+for i, child in ipairs(playerGui:GetChildren()) do
+	fn2(child)
+end
+for i, child in ipairs(CoreGui:GetChildren()) do
+	fn2(child)
+end
+playerGui.ChildAdded:Connect(fn2)
+CoreGui.ChildAdded:Connect(fn2)
+task.spawn(function()
+	local tbl2 = { 0.25, 1, 3 }
+	for i, v in ipairs(tbl2) do
+		task.wait(v)
+		_G.__VX7_APPLY_FPS_CAP()
+	end
+	while _G.VX7_LOADED do
+		task.wait(15)
+		_G.__VX7_APPLY_FPS_CAP()
+	end
+end)
+pcall(function()
+	UserInputService.WindowFocused:Connect(_G.__VX7_APPLY_FPS_CAP)
+end)
+localPlayer.CharacterAdded:Connect(function()
+	task.defer(_G.__VX7_APPLY_FPS_CAP)
+end)
+local isfile_, readfile_, writefile_ =
+	isfile or syn and syn.isfile or getgenv and getgenv().isfile or function()
+		return false
+	end, readfile or syn and syn.readfile or getgenv and getgenv().readfile or function()
+		return nil
+	end, writefile or syn and syn.writefile or getgenv and getgenv().writefile or function() end
+_G.__VX7_FS = {
+	isfolder = isfolder or syn and syn.isfolder or getgenv and getgenv().isfolder,
+	makefolder = makefolder or syn and syn.makefolder or getgenv and getgenv().makefolder,
+	delfile = delfile or syn and syn.delfile or getgenv and getgenv().delfile,
+}
+if _G.__VX7_FS.makefolder then
+	fn2 = { "vx7", "vx7/main", "vx7/intro", "vx7/antibat", "vx7/lagger" }
+	for i, v in ipairs(fn2) do
+		pcall(function()
+			if not _G.__VX7_FS.isfolder or not _G.__VX7_FS.isfolder(v) then
+				_G.__VX7_FS.makefolder(v)
+			end
+		end)
+	end
+end
+local tbl2 = {}
+pcall(function()
+	if isfile_("vx7/Vx7_UIPositions.json") then
+		local data = HttpService:JSONDecode(readfile_("vx7/Vx7_UIPositions.json"))
+		local kind = type(data)
+		if kind == "table" then
+			tbl2 = data
+		end
+	end
+end)
+local function fn3(arg, arg2, arg3, arg4)
+	if type(arg) ~= "table" then
+		return arg2
+	end
+	local num, num2, num3, num4 = tonumber(arg.sx), tonumber(arg.ox), tonumber(arg.sy), tonumber(arg.oy)
+	if not num or not num2 or not num3 or not num4 then
+		return arg2
+	end
+	arg = workspace.CurrentCamera and workspace.CurrentCamera.ViewportSize or (Vector2.new(1280, 720))
+	local n, n2 = arg.X * num + num2, arg.Y * num3 + num4
+	if n >= arg.X - 32 or n2 >= arg.Y - 24 or n + arg3 <= 32 or n2 + arg4 <= 24 then
+		return arg2
+	end
+	return UDim2.new(num, num2, num3, num4)
+end
+local function fn4(arg)
+	local udim2 = UDim2.fromOffset(16, 76)
+	if type(arg) == "table" and tonumber(arg.sx) == 0.5 and tonumber(arg.sy) == 0.5 then
+		local num, num2 = tonumber(arg.ox), tonumber(arg.oy)
+		if num == -82 and num2 == -25 or num == -74 and num2 == -21 or num == -59 and num2 == -21 then
+			return udim2
+		end
+	end
+	return fn3(arg, udim2, 164, 50)
+end
+local v, v2, v3, v4, fn5, fn6, safeMode, v5, v6, v7, v8, textLabel
+local instaResetEnabled = false
+local function fn7(arg, arg2)
+	if not arg then
+		return false
+	end
+	local n, n2 = arg2 or 3, 0
+	for i, descendant in ipairs(arg:GetDescendants()) do
+		if descendant:IsA("BasePart") and descendant.Anchored and descendant.Transparency == 1 then
+			n2 += 1
+			if n2 >= n then
+				return true
+			end
+		end
+	end
+	return false
+end
+local tbl3, skinGalaxyCache, handlers =
+	{ cache = {}, addConn = nil, remConn = nil, start = nil, stop = nil, crear = nil, limpiar = nil, setToggle = nil },
+	{},
+	{}
+if type(_G.__VX7_SKIN_PREVIEW_MODELS) ~= "table" then
+	_G.__VX7_SKIN_PREVIEW_MODELS = {}
+end
+local tbl4, tbl5, flag, tbl6 = {}, {}, false, {}
+local function fn8(scale)
+	for i = #tbl6, 1, -1 do
+		local v9 = tbl6[i]
+		if v9 and v9.Parent then
+			local uiScale = v9:FindFirstChildOfClass("UIScale");
+			(if not uiScale then (Instance.new("UIScale", v9)) else uiScale).Scale = scale
+		else
+			table.remove(tbl6, i)
+		end
+	end
+end
+local function fn9(arg, arg2, arg3)
+	local instance = Instance.new(arg, arg2)
+	if arg3 then
+		for k, v9 in pairs(arg3) do
+			instance[k] = v9
+		end
+	end
+	return instance
+end
+local v9
+local flag2 = false
+local handlers2 = {}
+local tbl7 = {}
+local tbl8 = { batAimbot = "aimbot", dropBrainrot = "drop" }
+local Config = nil
+Config = {
+	_openPopups = {},
+	_earlyAntiLagPrimed = type(tbl[1][6][tbl[1][3]]) == "table" and tbl[1][6][tbl[1][3]].__vx7AntiLagPrimed == true,
+	_earlyPotatoPrimed = type(tbl[1][6][tbl[1][3]]) == "table" and tbl[1][6][tbl[1][3]].__vx7PotatoPrimed == true,
+	normalSpeed = 60,
+	carrySpeed = 30,
+	laggerSpeed = 10.1,
+	speedToggled = false,
+	laggerEnabled = false,
+	speedMethod = "V2",
+	v2UseCarry = false,
+	normalStealSpeed = 30,
+	laggerStealSpeed = 10.1,
+	carryStealSpeed = 20,
+	infJumpEnabled = true,
+	antiRagdollEnabled = false,
+	antiRagdollMode = "V1",
+	antiLagEnabled = false,
+	potatoGraphicsEnabled = false,
+	stealToggled = false,
+	medusaCounterEnabled = false,
+	batAimbotToggled = false,
+	autoSwingEnabled = false,
+	autoStealEnabled = false,
+	batLaggerToggled = false,
+	batAimbotVersion = "Normal",
+	batLaggerAimbotVersion = "Standard",
+	batTpVersion = "V2",
+	musicSoundEnabled = false,
+	skipIntro = false,
+	skipIntroConfigured = false,
+	holdJumpEnabled = false,
+	autoPlayMode = "full",
+	autoPlayVersion = "V2",
+	batCounterMode = "Classic",
+	autoStealVersion = "V1",
+	stealFreezePercent = 85,
+	autoStealStopWhenHit = false,
+	autoStealHitPauseSeconds = 1.3,
+	_autoStealHitPauseUntil = 0,
+	guiVisible = true,
+	uiLocked = false,
+	stackButtonsHidden = false,
+	lockButtonsEnabled = false,
+	uiScale = UserInputService.TouchEnabled and 0.8 or 1,
+	popupScale = 1,
+	floatScale = 0.7,
+	stealBarScale = 1,
+	stealBarStyle = "Compact",
+	buttonShape = "Square",
+	stealRadius = 20,
+	stealDuration = 1.3,
+	jumpPower = 50,
+	isStealing = false,
+	stealStartTime = nil,
+	lastStealTick = 0,
+	medusaLastUsed = 0,
+	medusaDebounce = false,
+	hittingCooldown = false,
+	dropEnabled = false,
+	dropType = "Jump",
+	instaResetEnabled = false,
+	autoDeathResetEnabled = false,
+	duelAntiDieEnabled = false,
+	antiFlingEnabled = true,
+	_tpInProgress = false,
+	lastMoveDir = Vector3.new(0, 0, 0),
+	_prevCarry = 30,
+	_prevSpeed = false,
+	_duelWaiting = false,
+	autoLeftEnabled = false,
+	autoRightEnabled = false,
+	antiCollisionEnabled = true,
+	batTpNoCollision = false,
+	unwalkEnabled = false,
+	playerAnimEnabled = false,
+	playerAnimMode = "Unwalk",
+	tryhardAnimEnabled = false,
+	tryhardAnimPack = 1,
+	laggerFuncEnabled = false,
+	antiBatToggled = false,
+	batCounterEnabled = false,
+	batTpEnabled = false,
+	batTpStuds = 8,
+	batTpStudsV1 = 8,
+	batTpMaxRange = 350,
+	smartBatTpEnabled = false,
+	smartBatTpDistance = 9,
+	smartBatTpSpeed = 42,
+	smartBatTpAuto = true,
+	fovEnabled = false,
+	fovValue = 80,
+	resEnabled = false,
+	resFov = 100,
+	purpleSkyEnabled = false,
+	skyMode = nil,
+	espBoxEnabled = false,
+	espLineEnabled = false,
+	espLineOrigin = "Below",
+	espPlayerEnabled = false,
+	espInfoEnabled = false,
+	skinGalaxyEnabled = false,
+	skinCustomEnabled = false,
+	skinChangerSelection = 1,
+	keybindBoardEnabled = false,
+	isHoldingAnimal = false,
+	heldAnimalName = nil,
+	autoLaggerSpd = false,
+	infJumpMode = "manual",
+	silentBatAim = false,
+	sbaEnemyPerm = true,
+	sbaEnemyRadio = false,
+	sbaRange = 50,
+	sbaTurnSpeed = 30,
+	ragdollTimerEnabled = false,
+	enemyRagdollTimerEnabled = false,
+	ragdollRightArm = false,
+	ragdollLeftArm = false,
+	autoCarrySpeedEnabled = true,
+	_autoCarryFromSteal = false,
+	_autoCarryGraceUntil = 0,
+	_waitingForCarryPickup = false,
+	_carryPickupWatchUntil = 0,
+	_autoCarryReturnMode = nil,
+	autoTPDownEnabled = false,
+	autoTPDownHeight = 20,
+	uiPositions = { main = nil, infoBar = nil, vBtn = nil, lockBtn = nil, stackButtons = {} },
+	hiddenQuickButtons = {},
+	safeModeEnabled = true,
+	dropBrainrotMode = false,
+	warningE01Enabled = true,
+	warningE01Scale = 1,
+	bgMode = "image",
+	fontStyle = "VX7 Original",
+	billboardScale = 1,
+	statsBarEnabled = true,
+	_getBatTpStuds = function(arg)
+		if (type(arg) == "string" and arg or Config.batTpVersion or "V2") == "V1" then
+			return math.clamp(tonumber(Config.batTpStudsV1) or 8, 1, 20)
+		end
+		return math.clamp(tonumber(Config.batTpStuds) or 8, 1, 20)
+	end,
+	_setBatTpStuds = function(batTpStudsV1, arg)
+		batTpStudsV1 = math.clamp(tonumber(batTpStudsV1) or 8, 1, 20)
+		batTpStudsV1 = math.floor(batTpStudsV1 * 10 + 0.5) / 10
+		if (type(arg) == "string" and arg or Config.batTpVersion or "V2") == "V1" then
+			Config.batTpStudsV1 = batTpStudsV1
+			Config.batTpStuds = batTpStudsV1
+		else
+			Config.batTpStuds = batTpStudsV1
+			Config.batTpStudsV1 = batTpStudsV1
+		end
+		return batTpStudsV1
+	end,
+}
+Config.antiBatToggled = Config.antiBatToggled or false
+local n, n2, n3 = 10000, 20000, 100
+local n4, n5, flag3, n6 = math.random(n, n2), 0, false, 0
+local function fn10()
+	if writefile then
+		pcall(function()
+			writefile("Vx7AntiBat.json", HttpService:JSONEncode({ on = Config.antiBatToggled }))
+		end)
+	end
+end
+pcall(function()
+	if _G.__VX7AntiBatConn then
+		_G.__VX7AntiBatConn:Disconnect()
+	end
+	_G.__VX7AntiBatConn = nil
+	if isfile and (isfile("Vx7AntiBat.json")) then
+		local ok, result = pcall(function()
+			return HttpService:JSONDecode(readfile("Vx7AntiBat.json"))
+		end)
+		if ok and type(result) == "table" and result.on ~= nil then
+			Config.antiBatToggled = not not result.on
+		end
+	end
+end)
+local function fn11()
+	local character = localPlayer.Character
+	local humanoid = character and (character:FindFirstChildOfClass("Humanoid"))
+	if not humanoid then
+		return false
+	end
+	if humanoid.PlatformStand then
+		return true
+	end
+	local state = humanoid:GetState()
+	if state == Enum.HumanoidStateType.Ragdoll or state == Enum.HumanoidStateType.FallingDown then
+		return true
+	end
+	if character:GetAttribute("Ragdolled") or (character:GetAttribute("Ragdoll")) then
+		return true
+	end
+	character = localPlayer:GetAttribute("RagdollEndTime")
+	if character then
+		state, humanoid = pcall(function()
+			return workspace:GetServerTimeNow()
+		end)
+		if state and tonumber(character) - humanoid > 0 then
+			return true
+		end
+	end
+	return false
+end
+_G.__VX7_AB_GEN = (_G.__VX7_AB_GEN or 0) + 1
+local vx7AbGen = _G.__VX7_AB_GEN
+task.spawn(function()
+	while vx7AbGen == _G.__VX7_AB_GEN do
+		task.wait(0.1)
+		if not Config.antiBatToggled then
+			continue
+		end
+		flag3 = fn11()
+		if flag3 then
+			n5 = os.clock() + 1
+		end
+		n4 = if os.clock() < n5 then n3 else math.random(n, n2)
+	end
+end)
+_G.__VX7AntiBatConn = RunService.Heartbeat:Connect(function()
+	if not Config.antiBatToggled then
+		return
+	end
+	if Config._instaResetInProgress then
+		return
+	end
+	local character = localPlayer.Character
+	if not character then
+		return
+	end
+	local humanoid = character:FindFirstChildOfClass("Humanoid")
+	if humanoid and humanoid.Health <= 0 then
+		return
+	end
+	local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
+	if not humanoidRootPart then
+		return
+	end
+	humanoid, character = pcall(function()
+		return humanoidRootPart.AssemblyLinearVelocity
+	end)
+	if not humanoid or not character then
+		return
+	end
+	local vector = Vector3.new(character.X, 0, character.Z)
+	n6 = math.rad(math.random(0, 360))
+	local vector2 = Vector3.new(math.cos(n6) * n4, character.Y, math.sin(n6) * n4)
+	Config._abFakeLinear = vector2
+	Config._abHookRoot = humanoidRootPart
+	if not pcall(function()
+		humanoidRootPart.AssemblyLinearVelocity = vector2
+	end) then
+		return
+	end
+	RunService.RenderStepped:Wait()
+	if humanoidRootPart and humanoidRootPart.Parent then
+		pcall(function()
+			local y = humanoidRootPart.AssemblyLinearVelocity.Y
+			humanoidRootPart.AssemblyLinearVelocity = Vector3.new(vector.X, y, vector.Z)
+		end)
+	end
+end)
+function startAntiBat()
+	Config.antiBatToggled = true
+	if Config._antiBatPopupToggleSync then
+		pcall(Config._antiBatPopupToggleSync)
+	end
+	fn10()
+end
+function stopAntiBat()
+	Config.antiBatToggled = false
+	Config._abHookRoot = nil
+	if Config._antiBatPopupToggleSync then
+		pcall(Config._antiBatPopupToggleSync)
+	end
+	fn10()
+end
+function toggleAntiBat()
+	local flag4 = not Config.antiBatToggled
+	if flag4 then
+		pcall(startAntiBat)
+	else
+		pcall(stopAntiBat)
+	end
+	scheduleSaveConfig()
+	return flag4
+end
+Config._abFakeLinear = Vector3.new(0, 0, 0)
+Config._abFakeAngular = Vector3.new(0, 0, 0)
+Config._abHookRoot = nil
+Config._abHookOn = false
+pcall(function()
+	if type(getrawmetatable) ~= "function" then
+		return
+	end
+	local v10 = getrawmetatable(game)
+	if type(v10) ~= "table" then
+		return
+	end
+	local v11, v12, fn12, v13, fn13 =
+		setreadonly or make_writeable, isreadonly or iswriteable, newcclosure or function(arg)
+			return arg
+		end, checkcaller, rawequal or function(arg, arg2)
+			return arg == arg2
+		end
+	if type(v13) ~= "function" then
+		return
+	end
+	if v12 and v11 and (v12(v10)) then
+		pcall(v11, v10, false)
+	end
+	local index, newindex = v10.__index, v10.__newindex
+	v10.__index = fn12(function(arg, arg2)
+		if
+			(
+				arg2 == "AssemblyLinearVelocity"
+				or arg2 == "Velocity"
+				or arg2 == "AssemblyAngularVelocity"
+				or arg2 == "RotVelocity"
+			)
+			and Config.antiBatToggled
+			and not v13()
+			and Config._abHookRoot
+			and (fn13(arg, Config._abHookRoot))
+		then
+			if arg2 == "AssemblyLinearVelocity" or arg2 == "Velocity" then
+				return Config._abFakeLinear
+			else
+				return Config._abFakeAngular
+			end
+		end
+		if type(index) == "function" then
+			return index(arg, arg2)
+		elseif type(index) == "table" then
+			return index[arg2]
+		end
+		return nil
+	end)
+	v10.__newindex = fn12(function(arg, arg2, abFakeLinear)
+		if
+			(
+				arg2 == "AssemblyLinearVelocity"
+				or arg2 == "Velocity"
+				or arg2 == "AssemblyAngularVelocity"
+				or arg2 == "RotVelocity"
+			)
+			and Config.antiBatToggled
+			and not v13()
+			and Config._abHookRoot
+			and (fn13(arg, Config._abHookRoot))
+		then
+			if arg2 == "AssemblyLinearVelocity" or arg2 == "Velocity" then
+				Config._abFakeLinear = abFakeLinear
+			else
+				Config._abFakeAngular = abFakeLinear
+			end
+			return
+		end
+		if type(newindex) == "function" then
+			return newindex(arg, arg2, abFakeLinear)
+		elseif type(newindex) == "table" then
+			newindex[arg2] = abFakeLinear
+		end
+	end)
+	if v11 then
+		pcall(v11, v10, true)
+	end
+	Config._abHookOn = true
+end)
+Config._textInputFocused = function()
+	local ok, result = pcall(UserInputService.GetFocusedTextBox, UserInputService)
+	return ok and result ~= nil
+end
+local tbl9, tbl10 =
+	{
+		"Unwalk",
+		"TRYHARD",
+		"Amazon Unboxed",
+		"Zombie",
+		"Ninja",
+		"Knight",
+		"Elder",
+		"Levitate",
+		"Astronaut",
+		"Pirate",
+		"Toy",
+		"Vampire",
+		"Werewolf",
+		"Rthro",
+		"Stylish",
+		"Adidas Sports",
+		"Adidas Community",
+		"Adidas Aura",
+		"Wicked Popular",
+		"Mage",
+		"Catwalk Glam",
+		"Wicked Dancing Through Life",
+		"Superhero",
+		"No Boundaries",
+		"NFL",
+		"Robot",
+		"Bubbly",
+		"Cartoon",
+	}, {
+		TRYHARD = { 133806214992291, 94970088341563, 707897309, 707861613, 116936326516985, 116936326516985 },
+		["Amazon Unboxed"] = {
+			98281136301627,
+			98281136301627,
+			90478085024465,
+			134824450619865,
+			121454505477205,
+			94788218468396,
+			121145883950231,
+			105962919001086,
+			129126268464847,
+		},
+		Zombie = { 616158929, 616158929, 616168032, 616163682, 616161997, 616157476, 616156119 },
+		Ninja = { 656117400, 656117400, 656121766, 656118852, 656117878, 656115606, 656114359 },
+		Knight = { 657595757, 657595757, 657552124, 657564596, 658409194, 657600338, 658360781 },
+		Elder = { 845397899, 845397899, 845403856, 845386501, 845398858, 845397673, 845392038 },
+		Levitate = { 616006778, 616006778, 616013216, 616013216, 616008936, 616005863, 616003713 },
+		Astronaut = { 891621366, 891621366, 891636393, 891636393, 891627522, 891617961, 891609353 },
+		Pirate = { 750781874, 750781874, 750785693, 750783738, 750782230, 750780242, 750779899 },
+		Toy = { 782841498, 782841498, 782843345, 782842708, 782847020, 782846423, 782843869 },
+		Vampire = { 1083445855, 1083445855, 1083473930, 1083462077, 1083455352, 1083443587, 1083439238 },
+		Werewolf = { 1083195517, 1083195517, 1083178339, 1083216690, 1083218792, 1083189019, 1083182000 },
+		Rthro = { 2510196951, 2510196951, 2510202577, 2510198475, 2510197830, 2510195892, 2510192778 },
+		Stylish = { 616136790, 616136790, 616146177, 616140816, 616139451, 616134815, 616133594 },
+		["Adidas Sports"] = {
+			18537376492,
+			18537371272,
+			18537392113,
+			18537384940,
+			18537380791,
+			18537367238,
+			18537387180,
+			18537389531,
+			18537363391,
+		},
+		["Adidas Community"] = {
+			122257458498464,
+			102357151005774,
+			122150855457006,
+			82598234841035,
+			75290611992385,
+			98600215928904,
+			109346520324160,
+			133308483266208,
+			88763136693023,
+		},
+		["Adidas Aura"] = {
+			110211186840347,
+			114191137265065,
+			83842218823011,
+			118320322718866,
+			109996626521204,
+			95603166884636,
+			94922130551805,
+			134530128383903,
+			97824616490448,
+		},
+		["Wicked Popular"] = {
+			118832222982049,
+			76049494037641,
+			92072849924640,
+			72301599441680,
+			104325245285198,
+			121152442762481,
+			113199415118199,
+			99384245425157,
+			131326830509784,
+		},
+		Mage = {
+			10921144709,
+			10921145797,
+			10921152678,
+			10921148209,
+			10921149743,
+			10921148939,
+			10921151661,
+			10921150788,
+			10921143404,
+		},
+		["Catwalk Glam"] = {
+			133806214992291,
+			94970088341563,
+			109168724482748,
+			81024476153754,
+			116936326516985,
+			92294537340807,
+			98854111361360,
+			134591743181628,
+			119377220967554,
+		},
+		["Wicked Dancing Through Life"] = {
+			92849173543269,
+			132238900951109,
+			73718308412641,
+			135515454877967,
+			78508480717326,
+			78147885297412,
+			129183123083281,
+			110657013921774,
+			129447497744818,
+		},
+		Superhero = {
+			10921288909,
+			10921290167,
+			10921298616,
+			10921291831,
+			10921294559,
+			10921293373,
+			10921297391,
+			10921295495,
+			10921286911,
+		},
+		["No Boundaries"] = {
+			18747067405,
+			18747063918,
+			18747074203,
+			18747070484,
+			18747069148,
+			18747062535,
+			18747071682,
+			18747073181,
+			18747060903,
+		},
+		NFL = {
+			92080889861410,
+			74451233229259,
+			110358958299415,
+			117333533048078,
+			119846112151352,
+			129773241032,
+			79090109939093,
+			132697394189921,
+			134630013742019,
+		},
+		Robot = { 616088211, 616089559, 616095330, 616091570, 616090535, 616087089, 616094091, 616092998, 616086039 },
+		Bubbly = { 910004836, 910009958, 910034870, 910025107, 910016857, 910001910, 910030921, 910028158, 909997997 },
+		Cartoon = { 742637544, 742638445, 742640026, 742638842, 742637942, 742637151, 742639812, 742639220, 742636889 },
+	}
+local function fn12(arg)
+	if arg == "Pack 1" or arg == "Hit Harder" then
+		return "TRYHARD"
+	end
+	if arg == "Pack 2" then
+		return "Zombie"
+	end
+	for i, v10 in ipairs(tbl9) do
+		if v10 == arg then
+			return arg
+		end
+	end
+	return "Unwalk"
+end
+do
+	local tbl11 = {}
+	local function fn13(descendant)
+		if descendant and (descendant:IsA("Accessory")) then
+			pcall(function()
+				descendant:Destroy()
+			end)
+		end
+	end
+	local function fn14(arg, arg2)
+		local v10 = tbl11[arg]
+		if not v10 then
+			return
+		end
+		if v10.descendant then
+			v10.descendant:Disconnect()
+			v10.descendant = nil
+		end
+		for i, descendant in ipairs(arg2:GetDescendants()) do
+			fn13(descendant)
+		end
+		v10.descendant = arg2.DescendantAdded:Connect(fn13)
+	end
+	local function fn15(player)
+		if player == localPlayer or tbl11[player] then
+			return
+		end
+		local tbl12 = {}
+		tbl11[player] = tbl12
+		tbl12.character = player.CharacterAdded:Connect(function(character)
+			fn14(player, character)
+		end)
+		if player.Character then
+			fn14(player, player.Character)
+		end
+	end
+	local function fn16(player)
+		local v10 = tbl11[player]
+		if not v10 then
+			return
+		end
+		if v10.character then
+			v10.character:Disconnect()
+		end
+		if v10.descendant then
+			v10.descendant:Disconnect()
+		end
+		tbl11[player] = nil
+	end
+	for i, player in ipairs(Players:GetPlayers()) do
+		fn15(player)
+	end
+	Players.PlayerAdded:Connect(fn15)
+	Players.PlayerRemoving:Connect(fn16)
+end
+local function fn13(buttonShape)
+	buttonShape = buttonShape == "Circle" and "Circle" or "Square"
+	Config.buttonShape = buttonShape
+	local udim = buttonShape == "Circle" and (UDim.new(1, 0)) or (UDim.new(0, 14))
+	local function fn14(arg)
+		if not arg or not arg.Parent then
+			return
+		end
+		for i, descendant in ipairs(arg:GetDescendants()) do
+			if descendant:IsA("UICorner") and descendant.Name == "VX7ButtonShape" then
+				descendant.CornerRadius = udim
+			end
+		end
+	end
+	for i, v10 in ipairs(tbl6) do
+		fn14(v10)
+	end
+	for k, v10 in pairs(Config._quickButtonFrames or {}) do
+		fn14(v10)
+	end
+end
+local function fn14()
+	Config.batAimbotVersion = "Normal"
+end
+local tbl11, tbl12 =
+	{
+		speed = Enum.KeyCode.Q,
+		guiHide = Enum.KeyCode.LeftControl,
+		autoPlay = nil,
+		autoLeft = nil,
+		autoRight = nil,
+		lagger = nil,
+		drop = nil,
+		tpDown = Enum.KeyCode.F,
+		aimbot = nil,
+		laggerFunc = nil,
+		batLagger = nil,
+		batTp = nil,
+		smartBatTp = nil,
+	}, { Normal = nil, Lagger = nil, Carry = nil }
+local function fn15(arg)
+	local tbl13 = {}
+	for k, v10 in pairs(arg) do
+		tbl13[k] = type(v10) == "table" and (fn15(v10)) or v10
+	end
+	return tbl13
+end
+local v10, v11, v12 = fn15(Config), fn15(tbl11), fn15(tbl12)
+local v13
+Config.Core = {
+	Services = {
+		Players = Players,
+		RunService = RunService,
+		Input = UserInputService,
+		TweenService = TweenService,
+		HttpService = HttpService,
+		Lighting = Lighting,
+		SoundService = SoundService,
+	},
+	Player = localPlayer,
+	State = Config,
+	Keys = tbl11,
+	SpeedKeys = tbl12,
+	Modules = {},
+	Order = {},
+	Telemetry = {},
+}
+Config.Core.Register = function(name, arg)
+	if type(name) ~= "string" or type(arg) ~= "table" then
+		return nil
+	end
+	arg.Name = name
+	if type(arg.Destroy) ~= "function" then
+		arg.Destroy = arg.Stop or function() end
+	end
+	Config.Core.Modules[name] = arg
+	if not table.find(Config.Core.Order, name) then
+		table.insert(Config.Core.Order, name)
+	end
+	return arg
+end
+Config.Core.Get = function(arg)
+	return Config.Core.Modules[arg]
+end
+Config.Core.Call = function(arg, arg2, ...)
+	local tbl13 = Config.Core.Modules[arg]
+	local v14 = tbl13 and tbl13[arg2]
+	if type(v14) ~= "function" then
+		return false
+	end
+	tbl13 = { pcall(v14, ...) }
+	v14 = table.remove(tbl13, 1)
+	if not v14 then
+		warn("[VX7/" .. tostring(arg) .. "] " .. tostring(tbl13[1]))
+	end
+	return v14, table.unpack(tbl13)
+end
+Config.Core.DestroyAll = function()
+	for i = #Config.Core.Order, 1, -1 do
+		local v14 = Config.Core.Modules[Config.Core.Order[i]]
+		if v14 and type(v14.Destroy) == "function" then
+			pcall(v14.Destroy)
+		end
+	end
+end
+_G.VX7 = Config.Core
+local tbl13, tbl14, n7, n8, n9, n10, tbl15 =
+	{
+		L1 = Vector3.new(-476.48, -6.28, 92.73),
+		L2 = Vector3.new(-483.12, -4.95, 94.8),
+		R1 = Vector3.new(-476.16, -6.52, 25.62),
+		R2 = Vector3.new(-483.06, -5.03, 25.48),
+	}, {
+		bg = Color3.fromRGB(24, 24, 27),
+		card = Color3.fromRGB(35, 35, 40),
+		cardBorder = Color3.fromRGB(78, 78, 88),
+		rowBg = Color3.fromRGB(32, 32, 36),
+		rowBorder = Color3.fromRGB(65, 65, 74),
+		accent = Color3.fromRGB(235, 235, 240),
+		accentDim = Color3.fromRGB(130, 130, 140),
+		accentBr = Color3.fromRGB(255, 255, 255),
+		txtMain = Color3.fromRGB(235, 235, 240),
+		txtDim = Color3.fromRGB(145, 145, 155),
+		txtBright = Color3.fromRGB(255, 255, 255),
+		inputBg = Color3.fromRGB(27, 27, 31),
+		inputBorder = Color3.fromRGB(88, 88, 100),
+		inputFocus = Color3.fromRGB(255, 255, 255),
+		inputTxt = Color3.fromRGB(230, 230, 230),
+		pillOff = Color3.fromRGB(55, 55, 64),
+		pillOn = Color3.fromRGB(230, 230, 235),
+		dotOff = Color3.fromRGB(95, 95, 105),
+		dotOn = Color3.fromRGB(255, 255, 255),
+		pillBorder = Color3.fromRGB(125, 125, 138),
+		modeBtnBg = Color3.fromRGB(34, 34, 40),
+		modeBtnBrd = Color3.fromRGB(88, 88, 100),
+		modeBtnTxt = Color3.fromRGB(170, 170, 180),
+		modeBtnActBg = Color3.fromRGB(225, 225, 230),
+		modeBtnActTx = Color3.fromRGB(255, 255, 255),
+		chipBg = Color3.fromRGB(34, 34, 40),
+		chipBorder = Color3.fromRGB(88, 88, 100),
+		chipTxt = Color3.fromRGB(170, 170, 180),
+		btnBg = Color3.fromRGB(34, 34, 40),
+		btnBorder = Color3.fromRGB(82, 82, 94),
+		btnTxt = Color3.fromRGB(200, 200, 210),
+		btnHov = Color3.fromRGB(52, 52, 60),
+		stackBg = Color3.fromRGB(30, 30, 35),
+		stackBrd = Color3.fromRGB(130, 130, 140),
+		stackTxt = Color3.fromRGB(255, 255, 255),
+		stackActBg = Color3.fromRGB(37, 37, 44),
+		stackActBrd = Color3.fromRGB(255, 255, 255),
+		stackActTxt = Color3.fromRGB(255, 255, 255),
+		stackDot = Color3.fromRGB(70, 70, 78),
+		stackDotOn = Color3.fromRGB(255, 255, 255),
+		infoBg = Color3.fromRGB(30, 30, 35),
+		infoBrd = Color3.fromRGB(78, 78, 88),
+		infoTxt = Color3.fromRGB(170, 170, 180),
+		infoVal = Color3.fromRGB(210, 210, 220),
+		infoFill = Color3.fromRGB(220, 220, 225),
+		presetBg = Color3.fromRGB(34, 34, 40),
+		presetBrd = Color3.fromRGB(76, 76, 86),
+		presetLoad = Color3.fromRGB(62, 62, 70),
+		presetDel = Color3.fromRGB(82, 82, 92),
+		delBrd = Color3.fromRGB(125, 125, 138),
+		lockOn = Color3.fromRGB(255, 255, 255),
+		divider = Color3.fromRGB(72, 72, 82),
+		sectionTxt = Color3.fromRGB(190, 190, 200),
+		sectionDiv = Color3.fromRGB(72, 72, 82),
+		tabIdle = Color3.fromRGB(255, 255, 255),
+		tabActive = Color3.fromRGB(255, 255, 255),
+		tabActiveBg = Color3.fromRGB(32, 32, 38),
+		tabUnderline = Color3.fromRGB(255, 255, 255),
+		tabBarDiv = Color3.fromRGB(64, 64, 72),
+		topBg = Color3.fromRGB(30, 30, 35),
+		topTitle = Color3.fromRGB(255, 255, 255),
+		topSub = Color3.fromRGB(255, 255, 255),
+		topDivider = Color3.fromRGB(72, 72, 82),
+		green = Color3.fromRGB(210, 210, 215),
+		red = Color3.fromRGB(115, 115, 125),
+		dim = Color3.fromRGB(100, 100, 100),
+	}, 90, 52, 6, 2, {}
+local n11 = math.ceil(#tbl15 / n10) * (n8 + n9) - n9
+local function fn16(arg, arg2)
+	local n12, n13, n14 = (arg - 1) % n10, math.floor((arg - 1) / n10), arg2 / 2 + 10
+	return UDim2.new(0.5, n14 + n12 * (n7 + n9), 0.5, -(n11 / 2) + n13 * (n8 + n9))
+end
+local tbl16 = {}
+local function fn17(arg, arg2)
+	arg2 = arg2 or 334
+	local n12, n13, n14, n15 = (arg - 1) % n10, math.floor((arg - 1) / n10), arg2 / 2 + 10, n11 / 2 + n8 + n9 * 2
+	return UDim2.new(0.5, n14 + n12 * (n7 + n9), 0.5, n15 + n13 * (n8 + n9))
+end
+local function fn18(position, arg, arg2)
+	for i, v14 in ipairs(tbl16) do
+		if v14.key == position then
+			table.remove(tbl16, i)
+			break
+		end
+	end
+	table.insert(tbl16, { key = position, frame = arg })
+	position = fn17(#tbl16, arg2)
+	if flag2 then
+		arg.Position = position
+	else
+		TweenService:Create(arg, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Position = position }):Play()
+	end
+end
+local function fn19(arg)
+	for i, v14 in ipairs(tbl16) do
+		if v14.key == arg then
+			table.remove(tbl16, i)
+			break
+		end
+	end
+end
+local tbl17, ReplicatedStorage, plots, tbl18, tbl19, tbl20, tbl21, tbl22, tbl23 =
+	{ StealRadius = 20, StealDuration = 1.1 },
+	game:GetService("ReplicatedStorage"),
+	workspace:WaitForChild("Plots"),
+	{},
+	{},
+	{
+		Gold = Color3.fromRGB(255, 215, 0),
+		Oro = Color3.fromRGB(255, 215, 0),
+		Diamond = Color3.fromRGB(0, 230, 255),
+		Diamante = Color3.fromRGB(0, 230, 255),
+		Rainbow = Color3.fromRGB(255, 0, 200),
+		Arcoiris = Color3.fromRGB(255, 0, 200),
+		Bloodrot = Color3.fromRGB(200, 0, 0),
+		Sangre = Color3.fromRGB(200, 0, 0),
+		Candy = Color3.fromRGB(255, 100, 200),
+		Caramelo = Color3.fromRGB(255, 100, 200),
+		Lava = Color3.fromRGB(255, 80, 0),
+		Galaxy = Color3.fromRGB(120, 0, 220),
+		Galaxia = Color3.fromRGB(120, 0, 220),
+		YinYang = Color3.fromRGB(200, 200, 200),
+		Radioactive = Color3.fromRGB(0, 255, 50),
+		Radiactivo = Color3.fromRGB(0, 255, 50),
+		Cursed = Color3.fromRGB(200, 40, 40),
+		Maldito = Color3.fromRGB(200, 40, 40),
+		Divine = Color3.fromRGB(255, 255, 180),
+		Divino = Color3.fromRGB(255, 255, 180),
+		Cyber = Color3.fromRGB(0, 200, 255),
+		Cibernetico = Color3.fromRGB(0, 200, 255),
+		Phantom = Color3.fromRGB(255, 255, 255),
+		Fantasma = Color3.fromRGB(255, 255, 255),
+		Celestial = Color3.fromRGB(100, 200, 255),
+		Glitch = Color3.fromRGB(0, 255, 200),
+		Strawberry = Color3.fromRGB(255, 80, 150),
+		Fresa = Color3.fromRGB(255, 80, 150),
+		Blackhole = Color3.fromRGB(10, 0, 30),
+		AgujeroNegro = Color3.fromRGB(10, 0, 30),
+	},
+	{
+		AUTO_STEAL_ENABLED = false,
+		HOLD_MIN = 1.3,
+		HOLD_MAX = 2.6,
+		ENTRY_DELAY = 0.3,
+		COOLDOWN = 0.05,
+		STEAL_RANGE = 9,
+		PRIME_RANGE = 80,
+	},
+	{},
+	{ conn = nil, charConn = nil, gui = nil }
+local function fn20()
+	local character = localPlayer.Character
+	if not character then
+		return nil
+	end
+	local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
+	if not humanoidRootPart then
+		return nil
+	end
+	local position, huge, name = humanoidRootPart.Position, math.huge
+	for i, child in ipairs(workspace:GetChildren()) do
+		if not child:IsA("Model") or child == character or (child:IsA("Tool")) then
+			continue
+		end
+		if not child.PrimaryPart and not child:FindFirstChildOfClass("BasePart") then
+			continue
+		end
+		i = (
+			position
+			- (child.PrimaryPart and child.PrimaryPart.Position or child:FindFirstChildOfClass("BasePart").Position)
+		).Magnitude
+		if i > 8 then
+			continue
+		end
+		local v14, v15 = huge, name
+		if child:FindFirstChildOfClass("AnimationController") and not child:FindFirstChildOfClass("Humanoid") then
+			if i < v14 then
+				huge, name = i, child.Name
+			else
+				huge, name = v14, v15
+			end
+			continue
+		end
+		if tbl18 then
+			humanoidRootPart = child.Name:upper()
+			huge, name = v14, v15
+			for k, v16 in pairs(tbl18) do
+				if
+					humanoidRootPart:find(k:upper())
+					or type(v16) == "table" and v16.DisplayName and (humanoidRootPart:find(v16.DisplayName:upper()))
+				then
+					if i < huge then
+						huge, name = i, child.Name
+					end
+					break
+				end
+			end
+		else
+			local n12 = 0
+			for i2, descendant in ipairs(child:GetDescendants()) do
+				n12 = if descendant:IsA("BasePart") then n12 + 1 else n12
+				if n12 >= 3 then
+					break
+				end
+			end
+			if n12 >= 3 and i < v14 then
+				huge, name = i, child.Name
+			else
+				huge, name = v14, v15
+			end
+		end
+	end
+	return name
+end
+function buildAnimalHoldDetector()
+	if tbl23.conn then
+		tbl23.conn:Disconnect()
+		tbl23.conn = nil
+	end
+	if tbl23.charConn then
+		tbl23.charConn:Disconnect()
+		tbl23.charConn = nil
+	end
+	tbl23.conn = RunService.Heartbeat:Connect(function(deltaTime)
+		tbl23._acc = (tbl23._acc or 0) + (deltaTime or 0.016666666666666666)
+		if tbl23._acc < 0.15 then
+			return
+		end
+		tbl23._acc = 0
+		deltaTime = fn20()
+		local isHoldingAnimal = deltaTime ~= nil
+		if isHoldingAnimal ~= Config.isHoldingAnimal or deltaTime ~= Config.heldAnimalName then
+			Config.isHoldingAnimal = isHoldingAnimal
+			Config.heldAnimalName = deltaTime
+		end
+	end)
+	tbl23.charConn = localPlayer.CharacterAdded:Connect(function()
+		Config.isHoldingAnimal = false
+		Config.heldAnimalName = nil
+	end)
+end
+function destroyAnimalHoldDetector()
+	if tbl23.conn then
+		tbl23.conn:Disconnect()
+		tbl23.conn = nil
+	end
+	if tbl23.charConn then
+		tbl23.charConn:Disconnect()
+		tbl23.charConn = nil
+	end
+	Config.isHoldingAnimal = false
+	Config.heldAnimalName = nil
+end
+local v14 = (function()
+	local tbl24
+	local tbl25, tbl26, tbl27, tbl28, connection = { caches = {}, connections = {} }, {}, {}, {}
+	local autoSteal = {
+		active = false,
+		startTime = 0,
+		phase = "idle",
+		label = "",
+		lastResult = "",
+		lastResultTime = 0,
+		totalSteals = 0,
+		failedSteals = 0,
+		manualProgress = 0,
+		visualState = "IDLE",
+	}
+	Config.Core.Telemetry.AutoSteal = autoSteal
+	_G.StealBar = {
+		SetProgress = function(arg)
+			autoSteal.manualProgress = math.clamp(tonumber(arg) or 0, 0, 1)
+		end,
+		SetState = function(arg)
+			autoSteal.visualState = tostring(arg or "IDLE")
+		end,
+		Reset = function()
+			autoSteal.manualProgress = 0
+			autoSteal.visualState = "IDLE"
+		end,
+	}
+	local function fn21()
+		return pcall(function()
+			local packages, datas =
+				ReplicatedStorage:WaitForChild("Packages", 10), ReplicatedStorage:WaitForChild("Datas", 10)
+			if not packages or not datas then
+				return
+			end
+			tbl18 = require(datas:WaitForChild("Animals"))
+			local traits = datas:FindFirstChild("Traits")
+			if traits then
+				pcall(function()
+					tbl19 = require(traits)
+				end)
+			end
+			datas = packages:WaitForChild("Synchronizer")
+			tbl24 = {
+				channelFolder = datas:WaitForChild("Channel"),
+				routeRemote = datas:WaitForChild("CommunicationRoute"),
+				requestData = datas:FindFirstChild("RequestData"),
+			}
+		end) and tbl24 ~= nil
+	end
+	local function fn22(arg)
+		if typeof(arg) == "table" then
+			return arg
+		end
+		local tbl29 = {}
+		for match in string.gmatch(tostring(arg), "[^%.]+") do
+			table.insert(tbl29, tonumber(match) or match)
+		end
+		return tbl29
+	end
+	local function fn23(arg, arg2)
+		local v14, v15, v16 = arg2
+		for i, v17 in ipairs(fn22(arg)) do
+			v14, v15, v16 = v14 and v14[v17] or nil, v14, v17
+		end
+		return v14, v15, v16
+	end
+	local function fn24(arg, arg2)
+		local v14 = tbl25.caches[arg]
+		if typeof(v14) ~= "table" then
+			return
+		end
+		local v15, v16, v17, v18 = arg2[1], arg2[2], arg2[3], arg2[4]
+		local v19, v20, v21 = fn23(v15, v14)
+		if v16 == "Changed" then
+			if v20 ~= nil then
+				v20[v21] = v17
+			end
+		elseif v16 == "ArrayInsert" then
+			if v19 ~= nil then
+				table.insert(v19, v18, v17)
+			end
+		elseif v16 == "ArrayRemoved" then
+			if v19 ~= nil then
+				table.remove(v19, v18)
+			end
+		elseif v16 == "DictionaryInsert" then
+			if v19 ~= nil then
+				v19[v18] = v17
+			end
+		elseif v16 == "DictionaryRemoved" then
+			if v19 ~= nil then
+				v19[v18] = nil
+			end
+		end
+	end
+	local function fn25(arg)
+		if not tbl24 or tbl25.connections[arg] then
+			return
+		end
+		local str = tostring(arg.Name)
+		if not plots:FindFirstChild(str) then
+			return
+		end
+		if tbl24.requestData and tbl25.caches[str] == nil then
+			local ok, result = pcall(function()
+				return tbl24.requestData:InvokeServer(str)
+			end)
+			tbl25.caches[str] = ok and typeof(result) == "table" and result or {}
+		elseif tbl25.caches[str] == nil then
+			tbl25.caches[str] = {}
+		end
+		tbl25.connections[arg] = arg.OnClientEvent:Connect(function(arg2)
+			for i, v14 in ipairs(arg2) do
+				fn24(str, v14)
+			end
+		end)
+	end
+	local function fn26(arg)
+		for k, connection2 in pairs(tbl25.connections) do
+			if tostring(k.Name) == tostring(arg) then
+				connection2:Disconnect()
+				tbl25.connections[k] = nil
+				tbl25.caches[tostring(arg)] = nil
+				break
+			end
+		end
+	end
+	local function fn27()
+		if not fn21() then
+			return false
+		end
+		for i, child in ipairs(tbl24.channelFolder:GetChildren()) do
+			if child:IsA("RemoteEvent") then
+				fn25(child)
+			end
+		end
+		tbl24.channelFolder.ChildAdded:Connect(function(child)
+			if child:IsA("RemoteEvent") then
+				fn25(child)
+			end
+		end)
+		tbl24.routeRemote.OnClientEvent:Connect(function(arg)
+			for i, v14 in ipairs(arg) do
+				local v15, str = v14[1], tostring(v14[2])
+				if not plots:FindFirstChild(str) then
+					continue
+				end
+				if v15 == "ListenerAdded" then
+					v14 = tbl24.channelFolder:FindFirstChild(str)
+					if v14 and (v14:IsA("RemoteEvent")) then
+						fn25(v14)
+					end
+				elseif v15 == "ListenerRemoved" then
+					fn26(str)
+				end
+			end
+		end)
+		return true
+	end
+	local function fn28(arg)
+		return tbl25.caches[arg]
+	end
+	local function fn29(arg)
+		if not arg or not arg.plot then
+			return false
+		end
+		local yourBase = plots:FindFirstChild(arg.plot)
+		if not yourBase then
+			return false
+		end
+		arg = yourBase:FindFirstChild("PlotSign")
+		yourBase = arg and (arg:FindFirstChild("YourBase"))
+		return yourBase and (yourBase:IsA("BillboardGui")) and yourBase.Enabled
+	end
+	local function fn30(arg)
+		local v14 = plots:FindFirstChild(arg.plot)
+		if not v14 then
+			return nil
+		end
+		local animalPodiums = v14:FindFirstChild("AnimalPodiums")
+		v14 = animalPodiums and (animalPodiums:FindFirstChild(arg.slot))
+		return v14 and v14:GetPivot().Position
+	end
+	local function fn31(arg)
+		local character = localPlayer.Character
+		local humanoidRootPart = character
+			and (character:FindFirstChild("HumanoidRootPart") or (character:FindFirstChild("UpperTorso")))
+		if not humanoidRootPart then
+			return math.huge
+		end
+		character = fn30(arg)
+		if not character then
+			return math.huge
+		end
+		return (humanoidRootPart.Position - character).Magnitude
+	end
+	local function fn32(arg)
+		if not arg then
+			return nil
+		end
+		local spawn = tbl27[arg.uid]
+		if spawn and spawn.Parent then
+			return spawn
+		end
+		spawn = plots:FindFirstChild(arg.plot)
+		if not spawn then
+			return nil
+		end
+		local animalPodiums = spawn:FindFirstChild("AnimalPodiums")
+		if not animalPodiums then
+			return nil
+		end
+		spawn = animalPodiums:FindFirstChild(arg.slot)
+		if not spawn then
+			return nil
+		end
+		animalPodiums = spawn:FindFirstChild("Base")
+		if not animalPodiums then
+			return nil
+		end
+		spawn = animalPodiums:FindFirstChild("Spawn")
+		if not spawn then
+			return nil
+		end
+		animalPodiums = spawn:FindFirstChild("PromptAttachment")
+		if not animalPodiums then
+			return nil
+		end
+		for i, child in ipairs(animalPodiums:GetChildren()) do
+			if child:IsA("ProximityPrompt") then
+				tbl27[arg.uid] = child
+				return child
+			end
+		end
+		return nil
+	end
+	local function fn33()
+		local tbl29 = {}
+		for i, child in ipairs(plots:GetChildren()) do
+			i = fn28(child.Name)
+			local animalList = i and i.AnimalList
+			if typeof(animalList) == "table" then
+				for k, v14 in pairs(animalList) do
+					if typeof(v14) == "table" then
+						i = v14.Index
+						local v15 = tbl18[i]
+						if v15 then
+							local tier
+							local tbl30 = {}
+							if type(v14.Tier) == "string" and v14.Tier ~= "" then
+								tier = v14.Tier
+								table.insert(tbl30, v14.Tier)
+							end
+							if type(v14.Traits) == "table" then
+								for i2, trait in ipairs(v14.Traits) do
+									if type(trait) == "string" and trait ~= "" then
+										table.insert(tbl30, trait)
+									end
+								end
+							end
+							if type(v14.Trait) == "string" and v14.Trait ~= "" then
+								table.insert(tbl30, v14.Trait)
+							end
+							tier = if not tier and #tbl30 > 0 then tbl30[1] else tier
+							local tbl31, tbl32 = {}, {}
+							for i2, v16 in ipairs(tbl30) do
+								if not tbl31[v16] then
+									tbl31[v16] = true
+									table.insert(tbl32, v16)
+								end
+							end
+							table.insert(tbl29, {
+								name = v15.DisplayName or i,
+								plot = child.Name,
+								slot = tostring(k),
+								uid = child.Name .. "_" .. tostring(k),
+								mutation = v14.Mutation or nil,
+								tier = tier,
+								tiers = tbl32,
+							})
+						end
+					end
+				end
+			end
+		end
+		tbl26 = tbl29
+		return #tbl26
+	end
+	local function fn34()
+		local character = localPlayer.Character
+		local humanoidRootPart = character
+			and (character:FindFirstChild("HumanoidRootPart") or (character:FindFirstChild("UpperTorso")))
+		if not humanoidRootPart then
+			return nil
+		end
+		local huge, v14 = math.huge
+		for i, v15 in ipairs(tbl26) do
+			if fn29(v15) then
+				continue
+			end
+			character = fn30(v15)
+			if not character then
+				continue
+			end
+			i = (humanoidRootPart.Position - character).Magnitude
+			if i > tbl21.PRIME_RANGE then
+				continue
+			end
+			if i < huge then
+				huge, v14 = i, v15
+			end
+		end
+		return v14
+	end
+	local function fn35(arg)
+		if tbl28[arg] then
+			return
+		end
+		local tbl29, flag4, result = { holdCallbacks = {}, triggerCallbacks = {}, ready = true }, false
+		if getconnections then
+			flag4, result = pcall(getconnections, arg.PromptButtonHoldBegan)
+		end
+		if flag4 and typeof(result) == "table" then
+			for i, v14 in ipairs(result) do
+				if typeof(v14.Function) == "function" then
+					table.insert(tbl29.holdCallbacks, v14.Function)
+				end
+			end
+		end
+		flag4, result = false
+		if getconnections then
+			flag4, result = pcall(getconnections, arg.Triggered)
+		end
+		if flag4 and typeof(result) == "table" then
+			for i, v14 in ipairs(result) do
+				if typeof(v14.Function) == "function" then
+					table.insert(tbl29.triggerCallbacks, v14.Function)
+				end
+			end
+		end
+		if #tbl29.holdCallbacks > 0 or #tbl29.triggerCallbacks > 0 then
+			tbl28[arg] = tbl29
+		end
+	end
+	local function fn36(arg, arg2)
+		local v14 = tbl28[arg]
+		if not v14 or not v14.ready then
+			return false
+		end
+		v14.ready = false
+		local name = arg2.name or "Animal"
+		autoSteal.active = true
+		local now = tick()
+		autoSteal.phase = "holding"
+		autoSteal.label = name
+		task.spawn(function()
+			for i, holdCallback in ipairs(v14.holdCallbacks) do
+				task.spawn(holdCallback, localPlayer)
+			end
+			while autoSteal.active and tick() - now < tbl21.HOLD_MIN do
+				local n12 = (tick() - now) / tbl21.HOLD_MAX
+				if _G.StealBar then
+					_G.StealBar.SetState("STEALING")
+					_G.StealBar.SetProgress(n12)
+				end
+				task.wait()
+			end
+			autoSteal.phase = "waitingRange"
+			local flag4, flag5 = fn31(arg2) <= tbl21.STEAL_RANGE, false
+			while autoSteal.active and arg.Parent do
+				local n12 = tick() - now
+				if n12 > tbl21.HOLD_MAX then
+					break
+				end
+				local n13, v15 = n12 / tbl21.HOLD_MAX, fn31(arg2)
+				if _G.StealBar then
+					_G.StealBar.SetState("STEALING")
+					_G.StealBar.SetProgress(n13)
+				end
+				if v15 <= tbl21.STEAL_RANGE then
+					if not flag4 then
+						task.wait(tbl21.ENTRY_DELAY)
+					end
+					if autoSteal.active then
+						for i, triggerCallback in ipairs(v14.triggerCallbacks) do
+							task.spawn(triggerCallback, localPlayer)
+						end
+						pcall(function()
+							if _G.AutoCarrySpeed and _G.AutoCarrySpeed.WatchPickup then
+								_G.AutoCarrySpeed.WatchPickup(1.25)
+							end
+						end)
+						flag5 = true
+					end
+					break
+				end
+				task.wait()
+			end
+			if flag5 then
+				if _G.StealBar then
+					_G.StealBar.SetProgress(1)
+				end
+				autoSteal.totalSteals = autoSteal.totalSteals + 1
+				autoSteal.lastResult = "Stole " .. name
+				autoSteal.phase = "success"
+				Config.isStealing = true
+				task.spawn(function()
+					task.wait(4)
+					Config.isStealing = false
+				end)
+			else
+				autoSteal.failedSteals = autoSteal.failedSteals + 1
+				autoSteal.lastResult = "Missed window: " .. name
+				autoSteal.phase = "failed"
+			end
+			autoSteal.active = false
+			autoSteal.lastResultTime = tick()
+			task.wait(tbl21.COOLDOWN)
+			v14.ready = true
+			if _G.StealBar then
+				_G.StealBar.Reset()
+			end
+		end)
+		return true
+	end
+	local function fn37(arg, arg2)
+		if not arg or not arg.Parent then
+			return false
+		end
+		fn35(arg)
+		if not tbl28[arg] then
+			return false
+		end
+		return fn36(arg, arg2)
+	end
+	local function fn38()
+		if connection then
+			return
+		end
+		connection = RunService.Heartbeat:Connect(function()
+			if not tbl21.AUTO_STEAL_ENABLED then
+				return
+			end
+			if autoSteal.active then
+				return
+			end
+			local v14 = fn34()
+			if not v14 then
+				return
+			end
+			local v15 = tbl27[v14.uid]
+			v15 = if not v15 or not v15.Parent then (fn32(v14)) else v15
+			if v15 then
+				fn37(v15, v14)
+			end
+		end)
+	end
+	local fn39, fn40
+	do
+		local active, tbl29, n12, tbl30 = false, { Data = {} }, 0, { autoSteal = nil }
+		local function fn41()
+			autoSteal.active = active
+			if active then
+				autoSteal.startTime = os.clock()
+				autoSteal.phase = "holding"
+			else
+				autoSteal.startTime = 0
+				autoSteal.phase = "idle"
+			end
+		end
+		local function fn42(arg)
+			if not plots then
+				return false
+			end
+			local yourBase = plots:FindFirstChild(arg)
+			if not yourBase then
+				return false
+			end
+			arg = yourBase:FindFirstChild("PlotSign")
+			if arg then
+				yourBase = arg:FindFirstChild("YourBase")
+				if yourBase and (yourBase:IsA("BillboardGui")) then
+					return yourBase.Enabled == true
+				end
+			end
+			return false
+		end
+		local function fn43()
+			local character = localPlayer.Character
+			if not character then
+				return nil, nil, nil
+			end
+			local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
+			if not humanoidRootPart then
+				return nil, nil, nil
+			end
+			if #tbl26 == 0 then
+				pcall(fn33)
+			end
+			local v14
+			local huge, str = math.huge
+			if #tbl26 > 0 then
+				for i, v15 in ipairs(tbl26) do
+					pcall(function()
+						if fn29(v15) then
+							return
+						end
+						local v16 = fn30(v15)
+						if not v16 then
+							return
+						end
+						local magnitude = (humanoidRootPart.Position - v16).Magnitude
+						if magnitude > tbl21.PRIME_RANGE then
+							return
+						end
+						if magnitude >= huge then
+							return
+						end
+						v16 = fn32(v15)
+						if v16 and v16.Parent then
+							v14, huge, str = v16, magnitude, tostring(v15.slot)
+						end
+					end)
+				end
+			end
+			if v14 then
+				return v14, huge, str
+			end
+			if not plots then
+				return nil, nil, nil
+			end
+			local v15
+			local huge2, name = math.huge
+			for i, child in ipairs(plots:GetChildren()) do
+				if fn42(child.Name) then
+					continue
+				end
+				i = child:FindFirstChild("AnimalPodiums")
+				if not i then
+					continue
+				end
+				for i2, child2 in ipairs(i:GetChildren()) do
+					pcall(function()
+						local base = child2:FindFirstChild("Base")
+						local spawn = base and (base:FindFirstChild("Spawn"))
+						if spawn then
+							base = spawn:FindFirstChild("PromptAttachment")
+							if base then
+								local magnitude = (
+									(base:IsA("Attachment") and base.WorldPosition or spawn.Position)
+									- humanoidRootPart.Position
+								).Magnitude
+								if magnitude < huge2 and magnitude <= tbl17.StealRadius then
+									for i3, child3 in ipairs(base:GetChildren()) do
+										if child3:IsA("ProximityPrompt") then
+											v15, huge2, name = child3, magnitude, child2.Name
+											break
+										end
+									end
+								end
+							end
+						end
+					end)
+				end
+			end
+			return v15, huge2, name
+		end
+		local function fn44(arg)
+			local parent = arg and arg.Parent
+			if parent then
+				if parent:IsA("Attachment") then
+					return parent.WorldPosition
+				end
+				if parent:IsA("BasePart") then
+					return parent.Position
+				end
+				if parent:IsA("Model") and parent.PrimaryPart then
+					return parent.PrimaryPart.Position
+				end
+			end
+			return nil
+		end
+		local function fn45(arg, arg2)
+			if arg then
+				for i, child in ipairs(arg:GetChildren()) do
+					if child:IsA("Model") and (child.PrimaryPart or (child:FindFirstChildOfClass("BasePart"))) then
+						return child
+					end
+				end
+			end
+			local n13, v14 = 14
+			for i, child in ipairs(workspace:GetChildren()) do
+				if not child:IsA("Model") or child == localPlayer.Character or (child:IsA("Tool")) then
+					continue
+				end
+				arg = child.PrimaryPart or (child:FindFirstChildOfClass("BasePart"))
+				if not arg then
+					continue
+				end
+				if tbl18 then
+					local str, flag4 = child.Name:upper(), false
+					for k, v15 in pairs(tbl18) do
+						if
+							str:find(k:upper())
+							or type(v15) == "table" and v15.DisplayName and (str:find(v15.DisplayName:upper()))
+						then
+							flag4 = true
+							break
+						end
+					end
+					if not flag4 then
+						continue
+					end
+				end
+				i = (arg.Position - arg2).Magnitude
+				if i < n13 then
+					n13, v14 = i, child
+				end
+			end
+			return v14
+		end
+		local function fn46(arg, arg2)
+			if arg2 and arg2.animal and arg2.animal.Parent then
+				local animal = arg2.animal
+				local primaryPart = animal.PrimaryPart or (animal:FindFirstChildOfClass("BasePart"))
+				if primaryPart then
+					return primaryPart.Position
+				end
+			end
+			local v14 = fn44(arg)
+			if v14 then
+				return v14
+			end
+			if arg2 and arg2.pos then
+				return arg2.pos
+			end
+			return nil
+		end
+		local function fn47(arg)
+			local tbl31 = tbl29.Data[arg]
+			if tbl31 then
+				return tbl31
+			end
+			tbl31 = { hold = {}, trigger = {}, useFallback = true, ready = true }
+			tbl29.Data[arg] = tbl31
+			local parent = arg.Parent
+			local parent2 = parent and (parent:IsA("Attachment")) and parent.Parent
+			if parent2 and (parent2:IsA("BasePart")) then
+				tbl31.pos = parent2.Position
+			end
+			parent = parent2 and (parent2:IsA("BasePart")) and parent2.Parent
+			tbl31.animal = fn45(parent and parent.Parent, tbl31.pos)
+			pcall(function()
+				if getconnections then
+					for i, v14 in ipairs(getconnections(arg.PromptButtonHoldBegan)) do
+						if v14.Function then
+							table.insert(tbl31.hold, v14.Function)
+						end
+					end
+					for i, v14 in ipairs(getconnections(arg.Triggered)) do
+						if v14.Function then
+							table.insert(tbl31.trigger, v14.Function)
+						end
+					end
+				end
+			end)
+			if #tbl31.hold > 0 or #tbl31.trigger > 0 then
+				tbl31.useFallback = false
+			end
+			return tbl31
+		end
+		local function fn48(arg)
+			if active then
+				return
+			end
+			local v14 = fn47(arg)
+			if not v14.ready then
+				return
+			end
+			v14.ready = false
+			active = true
+			n12 = tick()
+			if _G.StealBar then
+				_G.StealBar.Reset()
+			end
+			task.spawn(function()
+				if
+					not xpcall(function()
+						local flag4 = false
+						pcall(function()
+							if not v14.useFallback and #v14.hold > 0 then
+								for i, v15 in ipairs(v14.hold) do
+									task.spawn(function()
+										pcall(v15)
+									end)
+								end
+								flag4 = true
+							end
+						end)
+						local n13 = math.clamp((tonumber(Config.stealFreezePercent) or 85) / 100, 0.01, 0.99)
+						local n14, n15 = n13 >= 0.8 and 7 or 9.3, math.max(0.05, 1.35 * n13)
+						local n16 = math.max(0.05, 1.35 - n15)
+						local function fn49()
+							local character = localPlayer.Character
+							local humanoidRootPart, v15 =
+								character and (character:FindFirstChild("HumanoidRootPart")), fn46(arg, v14)
+							return humanoidRootPart and v15 and (humanoidRootPart.Position - v15).Magnitude or math.huge
+						end
+						local function fn50()
+							v14.ready = true
+							active = false
+							if _G.StealBar then
+								_G.StealBar.Reset()
+							end
+						end
+						local now = tick()
+						while active and Config.autoStealEnabled do
+							local n17 = tick() - now
+							if n17 >= n15 then
+								break
+							end
+							if not arg.Parent or not arg.Parent.Parent or fn49() > tbl17.StealRadius then
+								fn50()
+								return
+							end
+							if _G.StealBar then
+								_G.StealBar.SetState("STEALING")
+								_G.StealBar.SetProgress(n13 * math.clamp(n17 / n15, 0, 1))
+							end
+							task.wait()
+						end
+						if not active or not Config.autoStealEnabled then
+							v14.ready = true
+							active = false
+							if _G.StealBar then
+								_G.StealBar.Reset()
+							end
+							return
+						end
+						if _G.StealBar then
+							_G.StealBar.SetState("STEALING")
+							_G.StealBar.SetProgress(n13)
+						end
+						now = tick()
+						while active and Config.autoStealEnabled do
+							if not arg.Parent then
+								break
+							end
+							if tick() - now >= 1.6 then
+								active = false
+								if _G.StealBar then
+									_G.StealBar.Reset()
+								end
+								task.wait(0.12)
+								v14.ready = true
+								return
+							end
+							n15 = localPlayer.Character
+							local humanoidRootPart = n15 and (n15:FindFirstChild("HumanoidRootPart"))
+							if not humanoidRootPart then
+								task.wait()
+								continue
+							end
+							local v15 = fn46(arg, v14)
+							local magnitude = v15 and (humanoidRootPart.Position - v15).Magnitude or math.huge
+							if magnitude > tbl17.StealRadius then
+								fn50()
+								return
+							end
+							if magnitude <= n14 then
+								break
+							end
+							magnitude = fn43()
+							if magnitude and magnitude ~= arg then
+								v15 = fn46(magnitude, tbl29.Data[magnitude])
+								if v15 and (humanoidRootPart.Position - v15).Magnitude <= n14 then
+									local v16 = fn47(magnitude)
+									if v16.ready then
+										arg, v14, flag4 = magnitude, v16, true
+										if not v14.useFallback and #v14.hold > 0 then
+											for i, v17 in ipairs(v14.hold) do
+												task.spawn(function()
+													pcall(v17)
+												end)
+											end
+										end
+										break
+									end
+								end
+							end
+							if _G.StealBar then
+								_G.StealBar.SetProgress(n13)
+							end
+							task.wait()
+						end
+						if not active or not Config.autoStealEnabled then
+							v14.ready = true
+							active = false
+							if _G.StealBar then
+								_G.StealBar.Reset()
+							end
+							return
+						end
+						now = tick()
+						while active and Config.autoStealEnabled do
+							n14 = tick() - now
+							n15 = n13 + (1 - n13) * math.clamp(n14 / n16, 0, 1)
+							if not arg.Parent or fn49() > tbl17.StealRadius then
+								fn50()
+								return
+							end
+							if _G.StealBar then
+								_G.StealBar.SetState("STEALING")
+								_G.StealBar.SetProgress(n15)
+							end
+							if n14 >= n16 then
+								break
+							end
+							task.wait()
+						end
+						if not active or not Config.autoStealEnabled then
+							v14.ready = true
+							active = false
+							if _G.StealBar then
+								_G.StealBar.Reset()
+							end
+							return
+						end
+						local flag5 = false
+						if flag4 and not v14.useFallback and #v14.trigger > 0 then
+							for i, v15 in ipairs(v14.trigger) do
+								task.spawn(function()
+									pcall(v15)
+								end)
+							end
+							flag5 = true
+						end
+						if not flag5 then
+							if type(fireproximityprompt) == "function" then
+								pcall(function()
+									fireproximityprompt(arg)
+									flag5 = true
+								end)
+							end
+							if not flag5 then
+								pcall(function()
+									arg:InputHoldBegin()
+									task.wait(1.35)
+									arg:InputHoldEnd()
+									flag5 = true
+								end)
+							end
+						end
+						if _G.StealBar then
+							_G.StealBar.SetProgress(1)
+						end
+						pcall(function()
+							if _G.AutoCarrySpeed and _G.AutoCarrySpeed.WatchPickup then
+								_G.AutoCarrySpeed.WatchPickup(1.25)
+							end
+						end)
+						task.wait(0.12)
+						v14.ready = true
+						active = false
+						if _G.StealBar then
+							_G.StealBar.Reset()
+						end
+					end, function(arg2)
+						pcall(function()
+							print("AutoSteal V1 error:", tostring(arg2))
+						end)
+					end)
+				then
+					v14.ready = true
+					active = false
+					if _G.StealBar then
+						_G.StealBar.Reset()
+					end
+				end
+			end)
+		end
+		fn39 = function()
+			if tbl30.autoSteal then
+				return
+			end
+			tbl30.autoSteal = RunService.Heartbeat:Connect(function()
+				if active and tick() - n12 > 6 then
+					active = false
+					for k, v14 in pairs(tbl29.Data) do
+						v14.ready = true
+					end
+					if _G.StealBar then
+						_G.StealBar.Reset()
+					end
+				end
+				if not Config.autoStealEnabled or active then
+					return
+				end
+				pcall(function()
+					local v14 = fn43()
+					if v14 then
+						fn48(v14)
+					end
+				end)
+			end)
+		end
+		fn40 = function()
+			if tbl30.autoSteal then
+				tbl30.autoSteal:Disconnect()
+				tbl30.autoSteal = nil
+			end
+			active = false
+			fn41()
+			if _G.StealBar then
+				_G.StealBar.Reset()
+			end
+		end
+	end
+	local flag4, flag5 = false, false
+	local function fn41()
+		if flag4 then
+			return
+		end
+		flag4 = true
+		task.spawn(function()
+			if not fn27() then
+				flag4 = false
+				return
+			end
+			flag5 = true
+			fn33()
+			task.spawn(function()
+				while flag5 do
+					task.wait(5)
+					if flag5 then
+						fn33()
+					end
+				end
+			end)
+		end)
+	end
+	local function fn42()
+		Config.autoStealVersion = "V2"
+		tbl21.AUTO_STEAL_ENABLED = true
+		fn41()
+		fn38()
+	end
+	local function fn43()
+		tbl21.AUTO_STEAL_ENABLED = false
+		autoSteal.active = false
+		autoSteal.phase = "idle"
+		if connection then
+			connection:Disconnect()
+			connection = nil
+		end
+		if _G.StealBar then
+			_G.StealBar.Reset()
+		end
+	end
+	fn41()
+	return { StartV1 = fn39, StopV1 = fn40, StartV2 = fn42, StopV2 = fn43, Telemetry = autoSteal }
+end)()
+fn5 = function(autoStealVersion)
+	if autoStealVersion == "V1" or autoStealVersion == "V2" then
+		Config.autoStealVersion = autoStealVersion
+	end
+	if Config.autoStealStopWhenHit and os.clock() < (Config._autoStealHitPauseUntil or 0) then
+		return
+	end
+	if Config.autoStealVersion == "V2" then
+		v14.StartV2()
+	else
+		v14.StartV1()
+	end
+end
+fn6 = function()
+	v14.StopV1()
+	v14.StopV2()
+	v14.Telemetry.active = false
+	v14.Telemetry.phase = "idle"
+	v14.Telemetry.manualProgress = 0
+	Config.isStealing = false
+end
+local function fn21(arg)
+	local autoStealVersion, flag4 = arg == "V2" and "V2" or "V1", Config.autoStealEnabled == true
+	Config._autoStealModeSwitchToken = (Config._autoStealModeSwitchToken or 0) + 1
+	local autoStealModeSwitchToken = Config._autoStealModeSwitchToken
+	Config.autoStealEnabled = false
+	fn6()
+	Config.autoStealVersion = autoStealVersion
+	if setAutoSteal then
+		setAutoSteal(false)
+	end
+	if flag4 then
+		task.delay(0.06, function()
+			if
+				Config._autoStealModeSwitchToken ~= autoStealModeSwitchToken
+				or Config.autoStealVersion ~= autoStealVersion
+			then
+				return
+			end
+			Config.autoStealEnabled = true
+			fn5(autoStealVersion)
+			if setAutoSteal then
+				setAutoSteal(true)
+			end
+		end)
+	end
+	return autoStealVersion
+end
+Config._autoStealHitToken = 0
+Config._autoStealHitLastRagdoll = false
+Config._autoStealHitLastMedusa = false
+Config._autoStealStopWhenHitIsMedusa = function()
+	if Config._instaResetInProgress or Config.dropEnabled then
+		return false
+	end
+	local character = localPlayer.Character
+	local humanoid = character and (character:FindFirstChildOfClass("Humanoid"))
+	if not humanoid or humanoid.Health <= 0 then
+		return false
+	end
+	humanoid = 0
+	for i, child in ipairs(character:GetChildren()) do
+		if child:IsA("BasePart") and child.Anchored and child.Transparency == 1 then
+			humanoid += 1
+			if humanoid >= 3 then
+				return true
+			end
+		end
+	end
+	return false
+end
+Config._autoStealStopWhenHitIsRagdolled = function()
+	local character = localPlayer.Character
+	local humanoid = character and (character:FindFirstChildOfClass("Humanoid"))
+	if not humanoid or humanoid.Health <= 0 then
+		return false
+	end
+	local serverTimeNow, attribute =
+		workspace:GetServerTimeNow(),
+		localPlayer:GetAttribute("RagdollEndTime")
+			or (character:GetAttribute("RagdollEndTime"))
+			or (humanoid:GetAttribute("RagdollEndTime"))
+	if type(attribute) == "number" and attribute > serverTimeNow then
+		return true
+	end
+	if
+		localPlayer:GetAttribute("Ragdolled") == true
+		or localPlayer:GetAttribute("Ragdoll") == true
+		or character:GetAttribute("Ragdolled") == true
+		or character:GetAttribute("Ragdoll") == true
+		or humanoid:GetAttribute("Ragdolled") == true
+		or humanoid:GetAttribute("Ragdoll") == true
+	then
+		return true
+	end
+	serverTimeNow = humanoid:GetState()
+	return humanoid.PlatformStand
+		or serverTimeNow == Enum.HumanoidStateType.Physics
+		or serverTimeNow == Enum.HumanoidStateType.Ragdoll
+		or serverTimeNow == Enum.HumanoidStateType.FallingDown
+end
+Config._autoStealStopWhenHitTrigger = function()
+	if not Config.autoStealStopWhenHit or not Config.autoStealEnabled then
+		return
+	end
+	local v15 = Config._autoStealStopWhenHitIsMedusa()
+	if v15 then
+		if Config._autoStealHitLastMedusa then
+			return
+		end
+		Config._autoStealHitLastMedusa = true
+	elseif os.clock() < (Config._autoStealHitPauseUntil or 0) then
+		return
+	end
+	Config._autoStealHitToken = (Config._autoStealHitToken or 0) + 1
+	local autoStealHitToken, n12 =
+		Config._autoStealHitToken, v15 and 3 or (math.clamp(tonumber(Config.autoStealHitPauseSeconds) or 1.3, 0.1, 30))
+	Config._autoStealHitPauseUntil = os.clock() + n12
+	fn6()
+	if _G.StealBar then
+		_G.StealBar.Reset()
+	end
+	task.delay(n12, function()
+		if autoStealHitToken ~= Config._autoStealHitToken then
+			return
+		end
+		Config._autoStealHitPauseUntil = 0
+		if Config.autoStealEnabled then
+			fn5(Config.autoStealVersion)
+		end
+	end)
+end
+Config._autoStealHitSignalConns = Config._autoStealHitSignalConns or {}
+Config._autoStealHitClearSignals = function()
+	for i, autoStealHitSignalConn in ipairs(Config._autoStealHitSignalConns) do
+		pcall(function()
+			autoStealHitSignalConn:Disconnect()
+		end)
+	end
+	table.clear(Config._autoStealHitSignalConns)
+end
+Config._autoStealHitBindCharacter = function(arg)
+	Config._autoStealHitClearSignals()
+	local humanoid = arg and (arg:FindFirstChildOfClass("Humanoid"))
+	if not humanoid then
+		return
+	end
+	local function fn22(arg2)
+		Config._autoStealHitSignalConns[#Config._autoStealHitSignalConns + 1] = arg2
+	end
+	local function fn23()
+		if Config.autoStealStopWhenHit and Config.autoStealEnabled then
+			Config._autoStealStopWhenHitTrigger()
+		end
+	end
+	fn22(humanoid.StateChanged:Connect(function(old, new)
+		if
+			new == Enum.HumanoidStateType.Physics
+			or new == Enum.HumanoidStateType.Ragdoll
+			or new == Enum.HumanoidStateType.FallingDown
+		then
+			fn23()
+		end
+	end))
+	fn22(humanoid:GetPropertyChangedSignal("PlatformStand"):Connect(function()
+		if humanoid.PlatformStand then
+			fn23()
+		end
+	end))
+	local health = humanoid.Health
+	fn22(humanoid.HealthChanged:Connect(function(health2)
+		if health2 < health then
+			fn23()
+		end
+		health = health2
+	end))
+	local function fn24(arg2)
+		local tbl24 = { "RagdollEndTime", "Ragdolled", "Ragdoll" }
+		for i, v15 in ipairs(tbl24) do
+			fn22(arg2:GetAttributeChangedSignal(v15):Connect(function()
+				if Config._autoStealStopWhenHitIsRagdolled() then
+					fn23()
+				end
+			end))
+		end
+	end
+	fn24(localPlayer)
+	fn24(arg)
+	fn24(humanoid)
+	local function fn25(child)
+		if not child:IsA("BasePart") or child.Parent ~= arg then
+			return
+		end
+		local function fn26()
+			if Config._autoStealStopWhenHitIsMedusa() then
+				fn23()
+			end
+		end
+		fn22(child:GetPropertyChangedSignal("Anchored"):Connect(fn26))
+		fn22(child:GetPropertyChangedSignal("Transparency"):Connect(fn26))
+	end
+	for i, child in ipairs(arg:GetChildren()) do
+		fn25(child)
+	end
+	fn22(arg.ChildAdded:Connect(fn25))
+end
+Config._autoStealStopWhenHitConn = RunService.Heartbeat:Connect(function(deltaTime)
+	if not Config.autoStealStopWhenHit or not Config.autoStealEnabled then
+		Config._autoStealHitLastRagdoll = false
+		Config._autoStealHitLastMedusa = false
+		return
+	end
+	Config._autoStealHitAcc = (Config._autoStealHitAcc or 0) + (deltaTime or 0.016666666666666666)
+	if Config._autoStealHitAcc < 0.025 then
+		return
+	end
+	Config._autoStealHitAcc = 0
+	deltaTime = Config._autoStealStopWhenHitIsRagdolled()
+	if Config._autoStealStopWhenHitIsMedusa() then
+		Config._autoStealStopWhenHitTrigger()
+	else
+		Config._autoStealHitLastMedusa = false
+		if deltaTime and not Config._autoStealHitLastRagdoll then
+			Config._autoStealStopWhenHitTrigger()
+		end
+	end
+	Config._autoStealHitLastRagdoll = deltaTime
+end)
+Config._autoStealStopWhenHitCharConn = localPlayer.CharacterAdded:Connect(function()
+	Config._autoStealHitLastRagdoll = false
+	Config._autoStealHitLastMedusa = false
+	Config._autoStealHitPauseUntil = 0
+	Config._autoStealHitToken = (Config._autoStealHitToken or 0) + 1
+	task.delay(0.1, function()
+		Config._autoStealHitBindCharacter(localPlayer.Character)
+	end)
+	task.delay(0.5, function()
+		if Config.autoStealEnabled then
+			fn5(Config.autoStealVersion)
+		end
+	end)
+end)
+task.defer(function()
+	Config._autoStealHitBindCharacter(localPlayer.Character)
+end)
+local v15, v16
+local tbl24, n12 = {}, 0
+local function fn22()
+	n12 += 1
+	for i, v17 in ipairs(tbl24) do
+		pcall(function()
+			v17:Disconnect()
+		end)
+	end
+	tbl24 = {}
+	if v16 then
+		pcall(function()
+			v16:Destroy()
+		end)
+	end
+	local tbl25 = { "MiroStealBar", "MoveeStealBar", "StealProgressScreenGui" }
+	for i, v17 in ipairs(tbl25) do
+		pcall(function()
+			local v18 = CoreGui:FindFirstChild(v17)
+			if v18 then
+				v18:Destroy()
+			end
+		end)
+		pcall(function()
+			local playerGui2 = localPlayer:FindFirstChild("PlayerGui")
+			local v18 = playerGui2 and (playerGui2:FindFirstChild(v17))
+			if v18 then
+				v18:Destroy()
+			end
+		end)
+	end
+	v16, v15 = nil, nil
+	Config._stealBarRoot = nil
+end
+local function fn23()
+	local new, udim2, udim22, udim, color, color2, new2, gothamBold, position =
+		Instance.new,
+		UDim2.new,
+		UDim2.fromOffset,
+		UDim.new,
+		Color3.fromRGB,
+		Color3.new,
+		ColorSequenceKeypoint.new,
+		Enum.Font.GothamBold,
+		v15 and v15.Parent and v15.Position or nil
+	fn22()
+	local v17, tbl25 = n12, { "MiroStealBar", "MoveeStealBar", "StealProgressScreenGui" }
+	for i, v18 in ipairs(tbl25) do
+		pcall(function()
+			local v19 = CoreGui:FindFirstChild(v18)
+			if v19 then
+				v19:Destroy()
+			end
+		end)
+		pcall(function()
+			local playerGui2 = localPlayer:FindFirstChild("PlayerGui")
+			local v19 = playerGui2 and (playerGui2:FindFirstChild(v18))
+			if v19 then
+				v19:Destroy()
+			end
+		end)
+	end
+	tbl25 = Config._currentThemePalette
+	local accent = tbl25 and tbl25.accent or (color(90, 140, 255))
+	local v18, flag4, ScreenGui =
+		color2(accent.R * 0.55, accent.G * 0.55, accent.B * 0.55), Config.stealBarStyle == "Compact", new("ScreenGui")
+	ScreenGui.Name = "MiroStealBar"
+	ScreenGui.ResetOnSpawn = false
+	ScreenGui.DisplayOrder = 200
+	ScreenGui.IgnoreGuiInset = true
+	ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+	pcall(function()
+		if syn and syn.protect_gui then
+			syn.protect_gui(ScreenGui)
+		end
+	end)
+	if not pcall(function()
+		ScreenGui.Parent = CoreGui
+	end) then
+		ScreenGui.Parent = localPlayer:WaitForChild("PlayerGui")
+	end
+	v16 = ScreenGui
+	local Frame = new("Frame", ScreenGui)
+	Frame.Name = "StealProgressGui"
+	Frame.Size = flag4 and (udim22(372, 54)) or (udim22(440, 44))
+	Frame.Position = position or (flag4 and (udim2(0.5, -186, 1, -134)) or (udim2(0.5, -220, 1, -124)))
+	Frame.AnchorPoint = Vector2.zero
+	Frame.BackgroundColor3 = color(22, 22, 26)
+	Frame.BackgroundTransparency = flag4 and 0.22 or 0.4
+	Frame.BorderSizePixel = 0
+	Frame.Active = true
+	Frame.Visible = true
+	Frame.ClipsDescendants = true
+	Frame.ZIndex = 300
+	new("UICorner", Frame).CornerRadius = flag4 and (udim(0, 8)) or (udim(1, 0))
+	v15 = Frame
+	Config._stealBarRoot = Frame
+	local UIScale = new("UIScale", Frame)
+	UIScale.Name = "VX7ProgressBarScale"
+	UIScale.Scale = math.clamp(tonumber(Config.stealBarScale) or 1, 0.5, 2)
+	function Config._applyStealBarScale(arg)
+		Config.stealBarScale = math.clamp(tonumber(arg) or 1, 0.5, 2)
+		if UIScale and UIScale.Parent then
+			UIScale.Scale = Config.stealBarScale
+		end
+		if Config._stealBarScaleLabel and Config._stealBarScaleLabel.Parent then
+			Config._stealBarScaleLabel.Text = string.format("%.2fx", Config.stealBarScale)
+		end
+	end
+	position = new("UIStroke", Frame)
+	position.Color = color(190, 190, 200)
+	position.Thickness = flag4 and 0.8 or 0.6
+	position.Transparency = 0.55
+	local ImageLabel = new("ImageLabel", Frame)
+	ImageLabel.Name = "StealBarBackground"
+	ImageLabel.Size = UDim2.fromScale(1, 1)
+	ImageLabel.BackgroundTransparency = 1
+	ImageLabel.BorderSizePixel = 0
+	ImageLabel.ScaleType = Enum.ScaleType.Crop
+	ImageLabel.ImageTransparency = Config._theme and Config._theme.index == 6 and 0.82 or 0.74
+	ImageLabel.ZIndex = 301
+	new("UICorner", ImageLabel).CornerRadius = flag4 and (udim(0, 8)) or (udim(1, 0))
+	local Frame2 = new("Frame", Frame)
+	Frame2.Name = "StealBarImageShade"
+	Frame2.Size = UDim2.fromScale(1, 1)
+	Frame2.BackgroundColor3 = tbl25 and tbl25.bg or (color(18, 18, 22))
+	Frame2.BackgroundTransparency = 0.38
+	Frame2.BorderSizePixel = 0
+	Frame2.ZIndex = 301
+	new("UICorner", Frame2).CornerRadius = flag4 and (udim(0, 8)) or (udim(1, 0))
+	function Config._refreshStealBarBackground(currentBackgroundAsset)
+		if currentBackgroundAsset and currentBackgroundAsset ~= "" then
+			Config._currentBackgroundAsset = currentBackgroundAsset
+		end
+		currentBackgroundAsset = Config._currentBackgroundAsset
+		local visible = currentBackgroundAsset ~= nil and currentBackgroundAsset ~= ""
+		if ImageLabel and ImageLabel.Parent then
+			ImageLabel.Image = currentBackgroundAsset or ""
+			ImageLabel.Visible = visible
+			ImageLabel.ImageTransparency = Config._theme and Config._theme.index == 6 and 0.82 or 0.74
+		end
+		if Frame2 and Frame2.Parent then
+			Frame2.Visible = visible
+			Frame2.BackgroundColor3 = Config._currentThemePalette and Config._currentThemePalette.bg
+				or (color(18, 18, 22))
+		end
+	end
+	Config._refreshStealBarBackground(Config._currentBackgroundAsset)
+	local TextLabel = new("TextLabel", Frame)
+	TextLabel.Name = "StealPercent"
+	TextLabel.Size = flag4 and (udim22(70, 22)) or (udim2(0, 46, 1, 0))
+	TextLabel.Position = flag4 and (udim22(14, 24)) or (udim22(10, 0))
+	TextLabel.BackgroundTransparency = 1
+	TextLabel.Text = "0%"
+	TextLabel.TextColor3 = color(255, 255, 255)
+	TextLabel.Font = gothamBold
+	TextLabel.TextSize = flag4 and 15 or 13
+	TextLabel.TextXAlignment = Enum.TextXAlignment.Left
+	TextLabel.TextYAlignment = Enum.TextYAlignment.Center
+	TextLabel.ZIndex = 305
+	tbl25 = new("TextLabel", Frame)
+	tbl25.Name = "StealStatus"
+	tbl25.Size = flag4 and (udim22(70, 16)) or (udim22(80, 44))
+	tbl25.Position = flag4 and (udim22(14, 7)) or (udim22(52, 0))
+	tbl25.BackgroundTransparency = 1
+	tbl25.Text = "STEAL"
+	tbl25.TextColor3 = flag4 and (color(205, 205, 214)) or (color(255, 255, 255))
+	tbl25.Font = gothamBold
+	tbl25.TextSize = flag4 and 8 or 14
+	tbl25.TextXAlignment = Enum.TextXAlignment.Left
+	tbl25.TextYAlignment = Enum.TextYAlignment.Center
+	tbl25.ZIndex = 304
+	position = new("Frame", Frame)
+	position.Name = "StealDivider"
+	position.Size = flag4 and (udim22(1, 34)) or (udim22(1, 22))
+	position.Position = flag4 and (udim22(88, 10)) or (udim2(0, 248, 0.5, -11))
+	position.BackgroundColor3 = color(200, 200, 210)
+	position.BackgroundTransparency = flag4 and 0.62 or 0.4
+	position.BorderSizePixel = 0
+	position.ZIndex = 305
+	position = new("TextLabel", Frame)
+	position.Name = "StealFpsLabel"
+	position.Size = flag4 and (udim22(28, 18)) or (udim2(0, 28, 1, 0))
+	position.Position = flag4 and (udim22(104, 28)) or (udim22(256, 0))
+	position.BackgroundTransparency = 1
+	position.Text = "FPS"
+	position.TextColor3 = color(190, 190, 200)
+	position.Font = flag4 and Enum.Font.Gotham or gothamBold
+	position.TextSize = flag4 and 8 or 11
+	position.TextXAlignment = Enum.TextXAlignment.Left
+	position.TextYAlignment = Enum.TextYAlignment.Center
+	position.ZIndex = 305
+	local TextLabel2 = new("TextLabel", Frame)
+	TextLabel2.Name = "StealFpsValue"
+	TextLabel2.Size = flag4 and (udim22(42, 18)) or (udim2(0, 36, 1, 0))
+	TextLabel2.Position = flag4 and (udim22(134, 28)) or (udim22(282, 0))
+	TextLabel2.BackgroundTransparency = 1
+	TextLabel2.Text = "60"
+	TextLabel2.TextColor3 = color(255, 255, 255)
+	TextLabel2.Font = flag4 and Enum.Font.GothamMedium or gothamBold
+	TextLabel2.TextSize = flag4 and 10 or 12
+	TextLabel2.TextXAlignment = Enum.TextXAlignment.Left
+	TextLabel2.TextYAlignment = Enum.TextYAlignment.Center
+	TextLabel2.ZIndex = 305
+	tbl25 = new("TextLabel", Frame)
+	tbl25.Name = "StealPingLabel"
+	tbl25.Size = flag4 and (udim22(34, 18)) or (udim2(0, 32, 1, 0))
+	tbl25.Position = flag4 and (udim22(211, 28)) or (udim22(322, 0))
+	tbl25.BackgroundTransparency = 1
+	tbl25.Text = "PING"
+	tbl25.TextColor3 = color(190, 190, 200)
+	tbl25.Font = flag4 and Enum.Font.Gotham or gothamBold
+	tbl25.TextSize = flag4 and 8 or 11
+	tbl25.TextXAlignment = Enum.TextXAlignment.Left
+	tbl25.TextYAlignment = Enum.TextYAlignment.Center
+	tbl25.ZIndex = 305
+	local TextLabel3 = new("TextLabel", Frame)
+	TextLabel3.Name = "StealPingValue"
+	TextLabel3.Size = flag4 and (udim22(62, 18)) or (udim2(0, 54, 1, 0))
+	TextLabel3.Position = flag4 and (udim22(247, 28)) or (udim22(354, 0))
+	TextLabel3.BackgroundTransparency = 1
+	TextLabel3.Text = "0ms"
+	TextLabel3.TextColor3 = color(255, 255, 255)
+	TextLabel3.Font = flag4 and Enum.Font.GothamMedium or gothamBold
+	TextLabel3.TextSize = flag4 and 10 or 12
+	TextLabel3.TextXAlignment = Enum.TextXAlignment.Left
+	TextLabel3.TextYAlignment = Enum.TextYAlignment.Center
+	TextLabel3.ZIndex = 305
+	position = new("Frame", Frame)
+	position.Name = "VX7StealTrack"
+	position.Size = flag4 and (udim22(258, 15)) or (udim22(240, 32))
+	position.Position = flag4 and (udim22(101, 8)) or (udim2(0, 4, 0.5, -16))
+	position.BackgroundColor3 = color(40, 40, 45)
+	position.BackgroundTransparency = flag4 and 0.08 or 0.4
+	position.BorderSizePixel = 0
+	position.ClipsDescendants = true
+	position.ZIndex = 302
+	new("UICorner", position).CornerRadius = udim(1, 0)
+	local Frame3 = new("Frame", position)
+	Frame3.Name = "StealFill"
+	Frame3.Size = udim2(0, 0, 1, 0)
+	Frame3.BackgroundColor3 = accent
+	Frame3.BorderSizePixel = 0
+	Frame3.ClipsDescendants = true
+	Frame3.ZIndex = 303
+	new("UICorner", Frame3).CornerRadius = udim(1, 0)
+	local UIGradient = new("UIGradient", Frame3)
+	UIGradient.Color = ColorSequence.new({
+		new2(0, v18),
+		new2(0.38, accent),
+		new2(0.68, accent:Lerp(color2(1, 1, 1), 0.34)),
+		new2(1, v18),
+	})
+	UIGradient.Rotation = -10
+	Frame3.BackgroundTransparency = 0
+	udim22 = new("Frame", Frame3)
+	udim22.Name = "StealGloss"
+	udim22.Size = udim2(1, 0, flag4 and 0.36 or 0.48, 0)
+	udim22.BackgroundColor3 = color2(1, 1, 1)
+	udim22.BackgroundTransparency = 0.76
+	udim22.BorderSizePixel = 0
+	udim22.ZIndex = 304
+	new("UICorner", udim22).CornerRadius = udim(1, 0)
+	local UIGradient2 = new("UIGradient", udim22)
+	UIGradient2.Rotation = 90
+	UIGradient2.Transparency =
+		NumberSequence.new({ NumberSequenceKeypoint.new(0, 0.18), NumberSequenceKeypoint.new(1, 1) })
+	task.spawn(function()
+		while v17 == n12 and Frame3.Parent do
+			local tween = TweenService:Create(
+				UIGradient,
+				TweenInfo.new(1.5, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut),
+				{ Offset = Vector2.new(0.5, 0) }
+			)
+			tween:Play()
+			tween.Completed:Wait()
+			if v17 ~= n12 or not Frame3.Parent then
+				break
+			end
+			tween = TweenService:Create(
+				UIGradient,
+				TweenInfo.new(1.5, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut),
+				{ Offset = Vector2.new(-0.5, 0) }
+			)
+			tween:Play()
+			tween.Completed:Wait()
+		end
+	end)
+	local flag5, position2, position3 = false
+	gothamBold = new("TextButton", Frame)
+	gothamBold.Size = udim2(1, 0, 1, 0)
+	gothamBold.BackgroundTransparency = 1
+	gothamBold.Text = ""
+	gothamBold.AutoButtonColor = false
+	gothamBold.ZIndex = 310
+	table.insert(
+		tbl24,
+		gothamBold.InputBegan:Connect(function(input)
+			if
+				input.UserInputType == Enum.UserInputType.MouseButton1
+				or input.UserInputType == Enum.UserInputType.Touch
+			then
+				flag5 = true
+				position2 = input.Position
+				position3 = Frame.Position
+				input.Changed:Connect(function()
+					local userInputState, end_ = input.UserInputState, Enum.UserInputState.End
+					if userInputState == end_ then
+						flag5 = false
+					end
+				end)
+			end
+		end)
+	)
+	table.insert(
+		tbl24,
+		UserInputService.InputChanged:Connect(function(input)
+			if not flag5 then
+				return
+			end
+			if
+				input.UserInputType == Enum.UserInputType.MouseMovement
+				or input.UserInputType == Enum.UserInputType.Touch
+			then
+				local n13 = input.Position - position2
+				Frame.Position =
+					udim2(position3.X.Scale, position3.X.Offset + n13.X, position3.Y.Scale, position3.Y.Offset + n13.Y)
+			end
+		end)
+	)
+	local n13, n14 = 0, 0
+	table.insert(
+		tbl24,
+		RunService.RenderStepped:Connect(function(deltaTime)
+			n13 += 1
+			n14 += deltaTime
+			if n14 >= 0.5 then
+				TextLabel2.Text = tostring(math.floor(n13 / n14 + 0.5))
+				n13, n14 = 0, 0
+				local n15 = 0
+				pcall(function()
+					n15 = math.floor(localPlayer:GetNetworkPing() * 1000 + 0.5)
+				end)
+				TextLabel3.Text = tostring(n15) .. "ms"
+			end
+		end)
+	)
+	local n15, v19, colorSequence, colorSequence2 = 0
+	local n16, v20 = 0
+	table.insert(
+		tbl24,
+		RunService.RenderStepped:Connect(function(deltaTime)
+			n16 += deltaTime or 0.016666666666666666
+			if n16 < 0.016666666666666666 then
+				return
+			end
+			n16 %= 0.016666666666666666
+			deltaTime = Config.Core.Telemetry.AutoSteal
+			local phase, currentThemePalette, flag6 =
+				deltaTime and deltaTime.phase or "idle",
+				if Config.autoStealEnabled and deltaTime
+					then (math.clamp(tonumber(deltaTime.manualProgress) or 0, 0, 1))
+					else 0,
+				Config.autoStealStopWhenHit and os.clock() < (Config._autoStealHitPauseUntil or 0)
+			if flag6 then
+				n15 = 0
+			elseif phase == "success" then
+				n15 = 1
+			else
+				n15 += (currentThemePalette - n15) * 0.45
+				deltaTime = math.abs(n15 - currentThemePalette)
+				if deltaTime < 0.005 then
+					n15 = currentThemePalette
+				end
+			end
+			deltaTime = math.floor(n15 * 100 + 0.5) .. "%"
+			Frame3.Size = udim2(n15, 0, 1, 0)
+			if deltaTime ~= v20 then
+				v20 = deltaTime
+				TextLabel.Text = deltaTime
+			end
+			currentThemePalette = Config._currentThemePalette
+			deltaTime = currentThemePalette and currentThemePalette.accent or accent
+			if v19 ~= deltaTime then
+				v19 = deltaTime
+				currentThemePalette, flag6 =
+					color2(deltaTime.R * 0.55, deltaTime.G * 0.55, deltaTime.B * 0.55),
+					deltaTime:Lerp(color2(1, 1, 1), 0.34)
+				colorSequence = ColorSequence.new({
+					new2(0, currentThemePalette),
+					new2(0.38, deltaTime),
+					new2(0.68, flag6),
+					new2(1, currentThemePalette),
+				})
+				colorSequence2 = ColorSequence.new(color2(1, 1, 1), flag6)
+			end
+			Frame3.BackgroundColor3 = deltaTime
+			Frame3.BackgroundTransparency = 0
+			if UIGradient.Color ~= colorSequence then
+				UIGradient.Color = colorSequence
+			end
+			if UIGradient2.Color ~= colorSequence2 then
+				UIGradient2.Color = colorSequence2
+			end
+		end)
+	)
+	return Frame
+end
+local n13, v17 = 1
+local tbl25 = {}
+local function fn24()
+	for i, v18 in ipairs(tbl25) do
+		pcall(function()
+			v18:Disconnect()
+		end)
+	end
+	tbl25 = {}
+	if v17 then
+		pcall(function()
+			v17:Destroy()
+		end)
+	end
+	v17 = nil
+	Config._statsBarRoot = nil
+end
+local function fn25()
+	local new, udim2, udim22, udim, color, new2, gothamBold =
+		Instance.new,
+		UDim2.new,
+		UDim2.fromOffset,
+		UDim.new,
+		Color3.fromRGB,
+		ColorSequenceKeypoint.new,
+		Enum.Font.GothamBold
+	fn24()
+	if UserInputService.TouchEnabled or Config.statsBarEnabled == false then
+		return
+	end
+	local ScreenGui = new("ScreenGui")
+	ScreenGui.Name = "VX7_StatsBar"
+	ScreenGui.ResetOnSpawn = false
+	ScreenGui.DisplayOrder = 999
+	ScreenGui.IgnoreGuiInset = false
+	ScreenGui.Parent = localPlayer:WaitForChild("PlayerGui")
+	tbl[2][6][tbl[2][3]](ScreenGui)
+	v17 = ScreenGui
+	local currentThemePalette, Frame = Config._currentThemePalette or {}, new("Frame", ScreenGui)
+	Frame.Name = "StatsBar"
+	Frame.Size = udim22(420, 44)
+	Frame.Position = udim2(0.5, -210, 0, 45)
+	Frame.BackgroundColor3 = currentThemePalette.statsBg or (color(22, 22, 26))
+	Frame.BackgroundTransparency = 0.18
+	Frame.BorderSizePixel = 0
+	Frame.ZIndex = 100
+	Frame.ClipsDescendants = true
+	Config._statsBarRoot = Frame
+	new("UICorner", Frame).CornerRadius = udim(1, 0)
+	ScreenGui = new("UIStroke", Frame)
+	ScreenGui.Name = "StatsStroke"
+	ScreenGui.Color = currentThemePalette.statsAccent or (color(190, 190, 200))
+	ScreenGui.Thickness = 0.7
+	ScreenGui.Transparency = 0.48
+	local ImageLabel = new("ImageLabel", Frame)
+	ImageLabel.Name = "StatsBackground"
+	ImageLabel.Size = UDim2.fromScale(1, 1)
+	ImageLabel.BackgroundTransparency = 1
+	ImageLabel.BorderSizePixel = 0
+	ImageLabel.Image = Config._currentBackgroundAsset or ""
+	ImageLabel.ImageTransparency = Config._theme and Config._theme.index == 6 and 0.86 or 0.78
+	ImageLabel.ScaleType = Enum.ScaleType.Crop
+	ImageLabel.ZIndex = 100
+	new("UICorner", ImageLabel).CornerRadius = udim(1, 0)
+	ScreenGui = new("Frame", Frame)
+	ScreenGui.Name = "StatsImageShade"
+	ScreenGui.Size = UDim2.fromScale(1, 1)
+	ScreenGui.BackgroundColor3 = currentThemePalette.bg or (color(18, 18, 22))
+	ScreenGui.BackgroundTransparency = 0.42
+	ScreenGui.BorderSizePixel = 0
+	ScreenGui.ZIndex = 101
+	new("UICorner", ScreenGui).CornerRadius = udim(1, 0)
+	function Config._refreshStatsBarBackground(currentBackgroundAsset)
+		if currentBackgroundAsset and currentBackgroundAsset ~= "" then
+			Config._currentBackgroundAsset = currentBackgroundAsset
+		end
+		if ImageLabel and ImageLabel.Parent then
+			ImageLabel.Image = Config._currentBackgroundAsset or ""
+			ImageLabel.Visible = ImageLabel.Image ~= ""
+			ImageLabel.ImageTransparency = Config._theme and Config._theme.index == 6 and 0.86 or 0.78
+		end
+	end
+	local function fn26(name, text, textSize, arg, arg2, textColor3, font, textXAlignment)
+		local TextLabel = new("TextLabel", Frame)
+		TextLabel.Name = name
+		TextLabel.Size = udim2(0, arg2, 1, 0)
+		TextLabel.Position = udim22(arg, 0)
+		TextLabel.BackgroundTransparency = 1
+		TextLabel.Text = text
+		TextLabel.TextColor3 = textColor3
+		TextLabel.Font = font
+		TextLabel.TextSize = textSize
+		TextLabel.TextXAlignment = textXAlignment or Enum.TextXAlignment.Left
+		TextLabel.TextYAlignment = Enum.TextYAlignment.Center
+		TextLabel.ZIndex = 104
+		return TextLabel
+	end
+	local statsText, statsMuted, statsAccent =
+		currentThemePalette.statsText or (color(255, 255, 255)),
+		currentThemePalette.statsMuted or (color(180, 180, 200)),
+		currentThemePalette.statsAccent or (color(200, 200, 210))
+	fn26("StatsBrand", "VX7 DUELS", 12, 14, 104, statsAccent, Enum.Font.GothamBlack)
+	ScreenGui = new("Frame", Frame)
+	ScreenGui.Name = "StatsDivider"
+	ScreenGui.Size = udim22(1, 26)
+	ScreenGui.Position = udim2(0, 122, 0.5, -13)
+	ScreenGui.BackgroundColor3 = statsAccent
+	ScreenGui.BackgroundTransparency = 0.58
+	ScreenGui.BorderSizePixel = 0
+	ScreenGui.ZIndex = 103
+	local function fn27(arg, arg2)
+		local Frame2 = new("Frame", Frame)
+		Frame2.Name = "StatsMetricCard"
+		Frame2.Size = udim22(arg2, 30)
+		Frame2.Position = udim22(arg, 7)
+		Frame2.BackgroundColor3 = (currentThemePalette.bg or (color(18, 18, 22))):Lerp(Color3.new(0, 0, 0), 0.22)
+		Frame2.BackgroundTransparency = 0.34
+		Frame2.BorderSizePixel = 0
+		Frame2.ZIndex = 102
+		new("UICorner", Frame2).CornerRadius = udim(1, 0)
+		return Frame2
+	end
+	fn27(134, 66)
+	fn27(207, 76)
+	ScreenGui = fn26("StatsLabel", "FPS", 7, 144, 22, statsMuted, gothamBold)
+	ScreenGui.Size = udim22(22, 12)
+	ScreenGui.Position = udim22(144, 9)
+	local StatsValue = fn26("StatsValue", "60", 11, 144, 48, statsText, gothamBold)
+	StatsValue.Size = udim22(48, 18)
+	StatsValue.Position = udim22(144, 19)
+	ScreenGui = fn26("StatsLabel", "PING", 7, 217, 28, statsMuted, gothamBold)
+	ScreenGui.Size = udim22(28, 12)
+	ScreenGui.Position = udim22(217, 9)
+	local StatsValue2 = fn26("StatsValue", "0ms", 11, 217, 58, statsText, gothamBold)
+	StatsValue2.Size = udim22(58, 18)
+	StatsValue2.Position = udim22(217, 19)
+	fn26("StatsDiscord", "discord.gg/vx7hub", 10, 292, 112, statsAccent, gothamBold, Enum.TextXAlignment.Right).AnchorPoint =
+		Vector2.new(0, 0)
+	fn27 = new("Frame", Frame)
+	fn27.Name = "StatsAccentLine"
+	fn27.Size = udim2(1, -28, 0, 2)
+	fn27.Position = udim2(0, 14, 1, -3)
+	fn27.BackgroundColor3 = statsAccent
+	fn27.BackgroundTransparency = 0.16
+	fn27.BorderSizePixel = 0
+	fn27.ZIndex = 105
+	new("UICorner", fn27).CornerRadius = udim(1, 0)
+	statsText = new("UIGradient", fn27)
+	statsText.Color = ColorSequence.new({
+		new2(0, statsAccent),
+		new2(0.5, statsAccent:Lerp(Color3.new(1, 1, 1), 0.32)),
+		new2(1, statsAccent),
+	})
+	statsText.Transparency = NumberSequence.new({
+		NumberSequenceKeypoint.new(0, 0.65),
+		NumberSequenceKeypoint.new(0.5, 0),
+		NumberSequenceKeypoint.new(1, 0.65),
+	})
+	local n14, n15 = 0, 0
+	table.insert(
+		tbl25,
+		RunService.RenderStepped:Connect(function(deltaTime)
+			n14 += 1
+			n15 += deltaTime
+			if n15 >= 0.5 then
+				StatsValue.Text = tostring(math.floor(n14 / n15 + 0.5))
+				n14, n15 = 0, 0
+				local n16 = 0
+				pcall(function()
+					n16 = math.floor(localPlayer:GetNetworkPing() * 1000 + 0.5)
+				end)
+				StatsValue2.Text = tostring(n16) .. "ms"
+			end
+		end)
+	)
+end
+local tbl26, thread, v18 = {}
+local n14 = 0
+local function fn26()
+	local now = os.clock()
+	if now - n14 > 0.2 then
+		n14 = now
+		local ok, result = pcall(function()
+			local playerGui2 = localPlayer.PlayerGui
+			local duelsMachineTopFrame = playerGui2 and (playerGui2:FindFirstChild("DuelsMachineTopFrame", true))
+			if
+				not duelsMachineTopFrame
+				or duelsMachineTopFrame:IsA("GuiObject") and not duelsMachineTopFrame.Visible
+			then
+				return nil
+			end
+			playerGui2 = duelsMachineTopFrame:FindFirstChild("Timer", true)
+			local label = playerGui2 and (playerGui2:FindFirstChild("Label") or playerGui2)
+			if label and (label:IsA("TextLabel") or (label:IsA("TextButton"))) then
+				return label
+			end
+			for i, descendant in ipairs(duelsMachineTopFrame:GetDescendants()) do
+				if (descendant:IsA("TextLabel") or (descendant:IsA("TextButton"))) and descendant.Visible then
+					i, playerGui2 =
+						descendant.Name:lower(), descendant.Parent and (descendant.Parent.Name:lower()) or ""
+					if
+						i:find("timer")
+						or (i:find("count"))
+						or (playerGui2:find("timer"))
+						or (playerGui2:find("count"))
+					then
+						return descendant
+					end
+				end
+			end
+			return nil
+		end)
+		v18 = ok and result or nil
+	end
+	if not v18 then
+		return false
+	end
+	local ok, result = pcall(function()
+		local str = tostring(v18.Text or ""):upper():gsub("^%s+", ""):gsub("%s+$", "")
+		if str == "GO" or str == "START" or str == "READY" then
+			return true
+		end
+		local num = tonumber(str)
+		return num ~= nil and num >= 0 and num <= 10
+	end)
+	return ok and result == true
+end
+local function fn27(isStealing)
+	isStealing = if isStealing and (fn26()) then false else isStealing
+	if isStealing == Config.isStealing then
+		return
+	end
+	Config.isStealing = isStealing
+end
+local function fn28()
+	for i, v19 in ipairs(tbl26) do
+		pcall(function()
+			v19:Disconnect()
+		end)
+	end
+	tbl26 = {}
+	if thread then
+		task.cancel(thread)
+		thread = nil
+	end
+end
+local function fn29(arg)
+	fn28()
+	local humanoid = arg and (arg:FindFirstChildOfClass("Humanoid"))
+	if not humanoid then
+		return
+	end
+	fn27(humanoid.WalkSpeed < 22)
+	table.insert(
+		tbl26,
+		humanoid:GetPropertyChangedSignal("WalkSpeed"):Connect(function()
+			fn27(humanoid.WalkSpeed < 22)
+		end)
+	)
+	Config._stealWatchedPrompts = Config._stealWatchedPrompts or (setmetatable({}, { __mode = "k" }))
+	local function fn30(arg2)
+		if not arg2:IsA("ProximityPrompt") or Config._stealWatchedPrompts[arg2] then
+			return
+		end
+		Config._stealWatchedPrompts[arg2] = true
+		table.insert(
+			tbl26,
+			arg2.PromptButtonHoldBegan:Connect(function(prompt)
+				if prompt ~= localPlayer then
+					return
+				end
+				fn27(true)
+				if thread then
+					task.cancel(thread)
+				end
+				thread = task.delay(tbl21.HOLD_MAX + 0.5, function()
+					fn27(false)
+				end)
+			end)
+		)
+		table.insert(
+			tbl26,
+			arg2.Triggered:Connect(function(player)
+				if player ~= localPlayer then
+					return
+				end
+				task.delay(0.2, function()
+					fn27(false)
+				end)
+			end)
+		)
+	end
+	table.insert(
+		tbl26,
+		workspace.DescendantAdded:Connect(function(descendant)
+			fn30(descendant)
+		end)
+	)
+	task.spawn(function()
+		local tbl27, n15, n16 = { workspace }, 1, 0
+		while n15 <= #tbl27 do
+			local v19 = tbl27[n15]
+			n15 += 1
+			for i, child in ipairs(v19:GetChildren()) do
+				tbl27[#tbl27 + 1] = child
+				fn30(child)
+			end
+			n16 += 1
+			if n16 % 80 == 0 then
+				RunService.Heartbeat:Wait()
+			end
+		end
+	end)
+end
+local tbl27, v19 = { sg = nil, frame = nil, discord = nil, divider = nil, speed = nil, scale = nil, brandLabels = {} }
+Config.isStealing = false
+Config._buildHeadDisplay = function(discord)
+	discord = discord or localPlayer.Character
+	if not (discord and (discord:FindFirstChild("Head"))) then
+		return false
+	end
+	if tbl27.sg then
+		pcall(function()
+			tbl27.sg:Destroy()
+		end)
+	end
+	tbl27.brandLabels = {}
+	local screenGui = Instance.new("ScreenGui")
+	screenGui.Name = "VX7_HeadDisplay"
+	screenGui.ResetOnSpawn = false
+	screenGui.DisplayOrder = 998
+	screenGui.IgnoreGuiInset = true
+	screenGui.Parent = localPlayer:FindFirstChild("PlayerGui") or CoreGui
+	local frame = Instance.new("Frame", screenGui)
+	frame.Size = UDim2.new(0, 240, 0, 76)
+	frame.BackgroundTransparency = 1
+	frame.BorderSizePixel = 0
+	frame.ZIndex = 3
+	local uiScale = Instance.new("UIScale", frame)
+	uiScale.Name = "VX7HeadDisplayScale"
+	uiScale.Scale = math.clamp(tonumber(Config.billboardScale) or 1, 0.5, 2)
+	local function fn30(arg)
+		local active = Config._theme and (Config._theme.active or Config._theme.base)
+		local accent, accent2, uiGradient =
+			active and active.accent or (Color3.fromRGB(80, 170, 255)),
+			active and active.accent2 or (Color3.fromRGB(190, 90, 255)),
+			Instance.new("UIGradient", arg)
+		uiGradient.Name = "VX7HeadTextGradient"
+		uiGradient.Color = Config._theme
+				and Config._theme.headTextGradient
+				and (Config._theme.headTextGradient(active, Config._theme.index))
+			or (
+				ColorSequence.new({
+					ColorSequenceKeypoint.new(0, accent),
+					ColorSequenceKeypoint.new(0.5, accent2),
+					ColorSequenceKeypoint.new(1, accent),
+				})
+			)
+	end
+	local frame2 = Instance.new("Frame", frame)
+	frame2.Size = UDim2.new(1, 0, 0, 32)
+	frame2.Position = UDim2.new(0, 20, 0, 0)
+	frame2.BackgroundTransparency = 1
+	frame2.ZIndex = 3
+	local function createTextLabel(text, textSize, position, arg, textXAlignment)
+		local textLabel2 = Instance.new("TextLabel", frame2)
+		textLabel2.Size = UDim2.new(0, arg, 1, 0)
+		textLabel2.Position = position
+		textLabel2.BackgroundTransparency = 1
+		textLabel2.Text = text
+		textLabel2.TextColor3 = Color3.fromRGB(255, 255, 255)
+		textLabel2.Font = Enum.Font.GothamBlack
+		textLabel2.TextSize = textSize
+		textLabel2.TextStrokeTransparency = 0.15
+		textLabel2.TextStrokeColor3 = Color3.fromRGB(32, 32, 38)
+		textLabel2.TextXAlignment = textXAlignment
+		textLabel2.ZIndex = 3
+		fn30(textLabel2)
+		table.insert(tbl27.brandLabels, textLabel2)
+		return textLabel2
+	end
+	discord = createTextLabel("discord.gg/", 20, UDim2.new(0.5, -107, 0, 0), 100, Enum.TextXAlignment.Right)
+	createTextLabel("v", 20, UDim2.new(0.5, -7, 0, 0), 14, Enum.TextXAlignment.Center)
+	createTextLabel("x7hub", 20, UDim2.new(0.5, 7, 0, 0), 80, Enum.TextXAlignment.Left)
+	createTextLabel = Instance.new("Frame", frame)
+	createTextLabel.Size = UDim2.new(0.85, 0, 0, 1)
+	createTextLabel.AnchorPoint = Vector2.new(0.5, 0)
+	createTextLabel.Position = UDim2.new(0.5, 0, 0, 34)
+	createTextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	createTextLabel.BorderSizePixel = 0
+	createTextLabel.ZIndex = 3
+	local textLabel2 = Instance.new("TextLabel", frame)
+	textLabel2.Size = UDim2.new(1, 0, 0, 34)
+	textLabel2.Position = UDim2.new(0, 0, 0, 38)
+	textLabel2.BackgroundTransparency = 1
+	textLabel2.Text = string.format("%.1f", tonumber(Config.normalSpeed) or 0)
+	textLabel2.TextColor3 = Color3.fromRGB(255, 255, 255)
+	textLabel2.Font = Enum.Font.GothamBold
+	textLabel2.TextSize = 24
+	textLabel2.TextStrokeTransparency = 0.15
+	textLabel2.TextStrokeColor3 = Color3.fromRGB(32, 32, 38)
+	textLabel2.TextXAlignment = Enum.TextXAlignment.Center
+	textLabel2.ZIndex = 3
+	fn30(textLabel2)
+	tbl27.sg = screenGui
+	tbl27.frame = frame
+	tbl27.discord = discord
+	tbl27.divider = createTextLabel
+	tbl27.speed = textLabel2
+	tbl27.scale = uiScale
+	v19 = textLabel2
+	if Config._earlyHeadConn then
+		pcall(function()
+			Config._earlyHeadConn:Disconnect()
+		end)
+	end
+	Config._earlyHeadConn = RunService.RenderStepped:Connect(function()
+		local humanoidRootPart = localPlayer.Character and (localPlayer.Character:FindFirstChild("HumanoidRootPart"))
+		if not screenGui.Parent then
+			if Config._earlyHeadConn then
+				Config._earlyHeadConn:Disconnect()
+				Config._earlyHeadConn = nil
+			end
+			return
+		end
+		if humanoidRootPart then
+			local laggerSpeed = Config.laggerEnabled and Config.laggerSpeed
+				or (Config.speedToggled and Config.carrySpeed or Config.normalSpeed)
+			textLabel2.Text = string.format("%.1f", tonumber(laggerSpeed) or 0)
+			laggerSpeed = workspace.CurrentCamera
+			if laggerSpeed then
+				local v20, v21 = laggerSpeed:WorldToViewportPoint(humanoidRootPart.Position + Vector3.new(0, 3.5, 0))
+				frame.Visible = v21
+				if v21 then
+					local scale = uiScale.Scale
+					frame.Position = UDim2.fromOffset(
+						math.floor(v20.X) - math.floor(120 * scale),
+						math.floor(v20.Y) - math.floor(76 * scale)
+					)
+				end
+			end
+		end
+	end)
+	pcall(function()
+		if Config._applyVisualTheme then
+			Config._applyVisualTheme(n13)
+		end
+	end)
+	return true
+end
+Config._applyHeadDisplayScale = function(arg)
+	Config.billboardScale = math.clamp(tonumber(arg) or 1, 0.5, 2)
+	if tbl27.scale and tbl27.scale.Parent then
+		tbl27.scale.Scale = Config.billboardScale
+	end
+	return Config.billboardScale
+end
+local tbl28 = {
+	"https://files.catbox.moe/5j8ga6.jpg",
+	"https://files.catbox.moe/a3ypd8.jpg",
+	"https://files.catbox.moe/om9irg.png",
+	"https://files.catbox.moe/mw3stx.jpg",
+	"https://files.catbox.moe/dgev5r.jpg",
+	"https://files.catbox.moe/6jh0ge.jpg",
+	"https://files.catbox.moe/87erl9.png",
+	"https://files.catbox.moe/alsa0o.jpg",
+	"https://files.catbox.moe/w8kj4j.jpg",
+}
+local function fn30(arg)
+	for k, v20 in pairs(arg) do
+		arg[k] = Color3.fromRGB(bit32.rshift(v20, 16), bit32.band(bit32.rshift(v20, 8), 255), bit32.band(v20, 255))
+	end
+	return arg
+end
+Config._theme = {
+	palettes = {
+		fn30({
+			bg = 16119287,
+			top = 15461358,
+			side = 15790323,
+			panel = 15000808,
+			hover = 13684949,
+			border = 2763567,
+			accent = 10264228,
+			accent2 = 6843250,
+			fill = 3158584,
+			fillIdle = 6909302,
+			statsBg = 3553343,
+			statsText = 16053751,
+			statsMuted = 12369862,
+			statsAccent = 14606565,
+			brand = 1579292,
+			text = 1316120,
+			muted = 6053734,
+			contrast = 657932,
+		}),
+		fn30({
+			bg = 854799,
+			top = 1511448,
+			side = 1248789,
+			panel = 2234402,
+			hover = 3743284,
+			border = 7222622,
+			accent = 16730801,
+			accent2 = 12725636,
+			fill = 16730801,
+			fillIdle = 11611000,
+			statsBg = 1904925,
+			statsText = 16773113,
+			statsMuted = 13344185,
+			statsAccent = 16730801,
+			brand = 16730801,
+			text = 16773113,
+			muted = 12751793,
+			contrast = 1640979,
+		}),
+		fn30({
+			bg = 2043972,
+			top = 2506068,
+			side = 2242381,
+			panel = 2901600,
+			hover = 3626355,
+			border = 6064561,
+			accent = 5743582,
+			accent2 = 8304093,
+			fill = 6600174,
+			fillIdle = 4423861,
+			statsBg = 1979724,
+			statsText = 15857917,
+			statsMuted = 11455458,
+			statsAccent = 6468074,
+			brand = 8897516,
+			text = 15660796,
+			muted = 11455458,
+			contrast = 1188916,
+		}),
+		fn30({
+			bg = 13492710,
+			top = 15267576,
+			side = 14348018,
+			panel = 12508386,
+			hover = 13889523,
+			border = 6867414,
+			accent = 2611688,
+			accent2 = 7126732,
+			fill = 1213593,
+			fillIdle = 4302517,
+			statsBg = 1855064,
+			statsText = 15662334,
+			statsMuted = 10803937,
+			statsAccent = 3463912,
+			brand = 811638,
+			text = 1127226,
+			muted = 4155761,
+			contrast = 601910,
+		}),
+		fn30({
+			bg = 1854001,
+			top = 2581825,
+			side = 2250810,
+			panel = 3043401,
+			hover = 4032857,
+			border = 6862210,
+			accent = 8777640,
+			accent2 = 12777427,
+			fill = 8777640,
+			fillIdle = 5484660,
+			statsBg = 1788720,
+			statsText = 16252922,
+			statsMuted = 12509898,
+			statsAccent = 8777640,
+			brand = 10154679,
+			text = 16252922,
+			muted = 12903887,
+			contrast = 1064738,
+		}),
+		fn30({
+			bg = 2168105,
+			top = 4401495,
+			side = 3481668,
+			panel = 5846895,
+			hover = 7687057,
+			border = 11897576,
+			accent = 12616956,
+			accent2 = 4446706,
+			fill = 12616956,
+			fillIdle = 7950746,
+			statsBg = 2956344,
+			statsText = 16446975,
+			statsMuted = 14139366,
+			statsAccent = 4446706,
+			brand = 14993407,
+			text = 16446975,
+			muted = 13612254,
+			contrast = 2102567,
+		}),
+		fn30({
+			bg = 1511969,
+			top = 2366259,
+			side = 1972009,
+			panel = 3023168,
+			hover = 4534360,
+			border = 7228030,
+			accent = 16732067,
+			accent2 = 16752202,
+			fill = 16732067,
+			fillIdle = 10702206,
+			statsBg = 2233904,
+			statsText = 16510967,
+			statsMuted = 12884661,
+			statsAccent = 16732067,
+			brand = 16740273,
+			text = 16248309,
+			muted = 10849446,
+			contrast = 2363428,
+		}),
+		fn30({
+			bg = 657940,
+			top = 1184290,
+			side = 921114,
+			panel = 1579048,
+			hover = 2500160,
+			border = 4013419,
+			accent = 3531007,
+			accent2 = 16727450,
+			fill = 3531007,
+			fillIdle = 2785182,
+			statsBg = 1052704,
+			statsText = 15595519,
+			statsMuted = 9413575,
+			statsAccent = 3531007,
+			brand = 6088447,
+			text = 15397631,
+			muted = 8293808,
+			contrast = 529180,
+		}),
+		(fn30({
+			bg = 16117214,
+			top = 15721422,
+			side = 15919576,
+			panel = 15326403,
+			hover = 14469540,
+			border = 6048307,
+			accent = 15309596,
+			accent2 = 11826730,
+			fill = 15309596,
+			fillIdle = 12159563,
+			statsBg = 4864548,
+			statsText = 16774886,
+			statsMuted = 14073495,
+			statsAccent = 16103746,
+			brand = 6046232,
+			text = 3023893,
+			muted = 8022610,
+			contrast = 16775404,
+		})),
+	},
+	base = fn30({
+		bg = 1315863,
+		top = 1908001,
+		side = 1710622,
+		panel = 2368553,
+		hover = 3618615,
+		border = 5789784,
+		accent = 15461355,
+		accent2 = 11513775,
+		brand = 15461355,
+		text = 16119285,
+		muted = 10197915,
+		contrast = 1315863,
+	}),
+	guiNames = {
+		Vx7ModernV2 = true,
+		MiroStealBar = true,
+		VX7_StatsBar = true,
+		VX7_KeybindBoard = true,
+		VX7QuickButtons = true,
+		VX7_HeadDisplay = true,
+	},
+}
+Config._fontStyleOrder = {
+	"VX7 Original",
+	"Merriweather",
+	"Builder",
+	"Nunito",
+	"Ubuntu",
+	"Fredoka",
+	"Roboto",
+	"Oswald",
+	"Cartoon",
+	"Arcade",
+	"Sci-Fi",
+	"Code",
+	"Bangers",
+}
+Config._resolveFontEnum = function(arg, arg2)
+	local ok, result = pcall(function()
+		return Enum.Font[arg]
+	end)
+	return ok and result or arg2
+end
+Config._fontProfiles = {
+	Merriweather = Config._resolveFontEnum("Merriweather", Enum.Font.GothamBold),
+	Builder = Config._resolveFontEnum("BuilderSansBold", Enum.Font.GothamBold),
+	Nunito = Config._resolveFontEnum("Nunito", Enum.Font.GothamMedium),
+	Ubuntu = Config._resolveFontEnum("Ubuntu", Enum.Font.GothamMedium),
+	Fredoka = Config._resolveFontEnum("FredokaOne", Enum.Font.GothamBold),
+	Roboto = Config._resolveFontEnum("Roboto", Enum.Font.SourceSans),
+	Oswald = Config._resolveFontEnum("Oswald", Enum.Font.GothamBold),
+	Cartoon = Config._resolveFontEnum("Cartoon", Enum.Font.GothamBold),
+	Arcade = Config._resolveFontEnum("Arcade", Enum.Font.Code),
+	["Sci-Fi"] = Config._resolveFontEnum("SciFi", Enum.Font.Code),
+	Code = Config._resolveFontEnum("Code", Enum.Font.Code),
+	Bangers = Config._resolveFontEnum("Bangers", Enum.Font.GothamBlack),
+}
+Config._fontOriginals = setmetatable({}, { __mode = "k" })
+Config._fontWatched = setmetatable({}, { __mode = "k" })
+Config._fontIsAlternate = function(arg)
+	for k, fontProfile in pairs(Config._fontProfiles) do
+		if arg == fontProfile then
+			return true
+		end
+	end
+	return false
+end
+Config._fontOriginalFallback = function(arg)
+	if arg:IsA("TextLabel") and (tonumber(arg.TextSize) or 0) >= 17 then
+		return Enum.Font.GothamBlack
+	end
+	return Enum.Font.GothamBold
+end
+Config._refreshHeadDisplayFont = function()
+	if not (tbl27.sg and tbl27.sg.Parent) then
+		return
+	end
+	for i, v20 in ipairs(tbl27.brandLabels or {}) do
+		if v20 and v20.Parent then
+			if Config.fontStyle == "VX7 Original" then
+				v20.Font = Enum.Font.GothamBlack
+				Config._fontOriginals[v20] = Enum.Font.GothamBlack
+			else
+				Config._applyFontObject(v20)
+			end
+		end
+	end
+	if tbl27.speed and tbl27.speed.Parent then
+		if Config.fontStyle == "VX7 Original" then
+			tbl27.speed.Font = Enum.Font.GothamBold
+			Config._fontOriginals[tbl27.speed] = Enum.Font.GothamBold
+		else
+			Config._applyFontObject(tbl27.speed)
+		end
+	end
+	if Config._applyVisualTheme then
+		pcall(Config._applyVisualTheme)
+	end
+end
+Config._fontRootAllowed = function(arg)
+	if not arg then
+		return false
+	end
+	local str = tostring(arg.Name or "")
+	arg = str:lower()
+	return Config._theme.guiNames[str]
+		or arg:find("vx7", 1, true) ~= nil
+		or arg:find("miro", 1, true) ~= nil
+		or str == "RagCountdownBillboard"
+		or str:sub(1, 18) == "EnemyRagCountdown_"
+end
+Config._fontStyleValid = function(arg)
+	for i, v20 in ipairs(Config._fontStyleOrder) do
+		if v20 == arg then
+			return true
+		end
+	end
+	return false
+end
+Config._applyFontObject = function(arg)
+	if not (arg and (arg:IsA("TextLabel") or (arg:IsA("TextButton")) or (arg:IsA("TextBox")))) then
+		return
+	end
+	local font = Config._fontOriginals[arg]
+	if not font or (Config._fontIsAlternate(font)) then
+		font = arg.Font
+		if Config._fontIsAlternate(font) then
+			font = Config._fontOriginalFallback(arg)
+		end
+		Config._fontOriginals[arg] = font
+	end
+	local v20 = Config._fontProfiles[Config.fontStyle]
+	pcall(function()
+		arg.Font = v20 or font
+	end)
+end
+Config._watchFontRoot = function(arg)
+	if not Config._fontRootAllowed(arg) or Config._fontWatched[arg] then
+		return
+	end
+	Config._fontWatched[arg] = true
+	Config._applyFontObject(arg)
+	for i, descendant in ipairs(arg:GetDescendants()) do
+		Config._applyFontObject(descendant)
+	end
+	arg.DescendantAdded:Connect(function(descendant)
+		task.defer(Config._applyFontObject, descendant)
+		task.delay(0.08, function()
+			if descendant and descendant.Parent then
+				Config._applyFontObject(descendant)
+			end
+		end)
+	end)
+end
+Config._applyGlobalFont = function()
+	local v20, tbl29 = ipairs, { localPlayer:FindFirstChild("PlayerGui"), CoreGui }
+	for k, v21 in v20(tbl29) do
+		if v21 then
+			for i, child in ipairs(v21:GetChildren()) do
+				Config._watchFontRoot(child)
+				if Config._fontRootAllowed(child) then
+					Config._applyFontObject(child)
+					for i2, descendant in ipairs(child:GetDescendants()) do
+						Config._applyFontObject(descendant)
+					end
+				end
+			end
+		end
+	end
+end
+Config._refreshGlobalFont = function()
+	Config._applyGlobalFont()
+	task.defer(Config._applyGlobalFont)
+	task.delay(0.12, Config._applyGlobalFont)
+end
+task.defer(function()
+	localPlayer:WaitForChild("PlayerGui").ChildAdded:Connect(function(child)
+		task.defer(Config._watchFontRoot, child)
+	end)
+	CoreGui.ChildAdded:Connect(function(child)
+		task.defer(Config._watchFontRoot, child)
+	end)
+	Config._refreshGlobalFont()
+end)
+local v20
+local tbl29 = {}
+local function fn31()
+	return {
+		normalSpeed = Config.normalSpeed,
+		carrySpeed = Config.carrySpeed,
+		laggerSpeed = Config.laggerSpeed,
+		normalStealSpeed = Config.normalStealSpeed,
+		carryStealSpeed = Config.carryStealSpeed,
+		laggerStealSpeed = Config.laggerStealSpeed,
+		stealRadius = tbl17.StealRadius or 20,
+		stealFreezePercent = Config.stealFreezePercent or 85,
+		infJump = Config.infJumpEnabled,
+		antiRagdoll = Config.antiRagdollEnabled,
+		antiRagdollEnabled = Config.antiRagdollEnabled,
+		antiLag = Config.antiLagEnabled,
+		potatoGraphics = Config.potatoGraphicsEnabled,
+		medusaCounter = Config.medusaCounterEnabled,
+		instaReset = false,
+		duelAntiDieEnabled = Config.duelAntiDieEnabled or false,
+		autoDeathReset = Config.autoDeathResetEnabled or false,
+		batAimbotToggled = Config.batAimbotToggled,
+		autoSwingEnabled = Config.autoSwingEnabled or false,
+		autoStealEnabled = Config.autoStealEnabled,
+		autoStealStopWhenHit = Config.autoStealStopWhenHit == true,
+		autoStealHitPauseSeconds = Config.autoStealHitPauseSeconds or 1.3,
+		autoCarryOnSteal = Config.autoCarrySpeedEnabled ~= false,
+		autoTPDownEnabled = Config.autoTPDownEnabled == true,
+		autoTPDownHeight = Config.autoTPDownHeight or 20,
+		musicSoundEnabled = Config.musicSoundEnabled,
+		skipIntro = Config.skipIntro,
+		skipIntroConfigured = Config.skipIntroConfigured,
+		holdJumpEnabled = Config.holdJumpEnabled,
+		ragdollTimerEnabled = Config.ragdollTimerEnabled or false,
+		enemyRagdollTimerEnabled = Config.enemyRagdollTimerEnabled or false,
+		autoLeftEnabled = Config.autoLeftEnabled or false,
+		autoRightEnabled = Config.autoRightEnabled or false,
+		dropEnabled = Config.dropEnabled or false,
+		espBoxEnabled = Config.espBoxEnabled,
+		espLineEnabled = Config.espLineEnabled,
+		espLineOrigin = Config.espLineOrigin,
+		espPlayerEnabled = Config.espPlayerEnabled,
+		espInfoEnabled = Config.espInfoEnabled,
+		skinGalaxyEnabled = Config.skinGalaxyEnabled,
+		skinCustomEnabled = Config.skinCustomEnabled or false,
+		skinChangerSelection = Config.skinChangerSelection or 1,
+		keybindBoardEnabled = Config.keybindBoardEnabled,
+		antiRagdollMode = Config.antiRagdollMode or "V1",
+		unwalkEnabled = Config.unwalkEnabled,
+		tryhardAnimEnabled = Config.tryhardAnimEnabled,
+		tryhardAnimPack = Config.tryhardAnimPack or 1,
+		playerAnimEnabled = Config.playerAnimEnabled or false,
+		playerAnimMode = Config.playerAnimMode or "Unwalk",
+		batCounterEnabled = Config.batCounterEnabled,
+		batTpEnabled = Config.batTpEnabled,
+		smartBatTpEnabled = Config.smartBatTpEnabled,
+		smartBatTpDistance = Config.smartBatTpDistance or 9,
+		smartBatTpSpeed = Config.smartBatTpSpeed or 42,
+		smartBatTpAuto = Config.smartBatTpAuto ~= false,
+		laggerFuncEnabled = Config.laggerFuncEnabled,
+		safeModeEnabled = Config.safeModeEnabled ~= false,
+		dropBrainrotMode = Config.dropBrainrotMode == true,
+		warningE01Enabled = Config.warningE01Enabled ~= false,
+		warningE01Scale = Config.warningE01Scale or 1,
+		batTpNoCollision = Config.batTpNoCollision == true,
+		buttonShape = Config.buttonShape or "Square",
+		floatScale = Config.floatScale or 0.7,
+		stealBarScale = Config.stealBarScale or 1,
+		stealBarStyle = Config.stealBarStyle or "Compact",
+		fontStyle = Config.fontStyle or "VX7 Original",
+		billboardScale = Config.billboardScale or 1,
+		statsBarEnabled = Config.statsBarEnabled ~= false,
+		fovEnabled = Config.fovEnabled or false,
+		fovValue = Config.fovValue or 80,
+		resEnabled = Config.resEnabled or false,
+		resFov = Config.resFov or 100,
+		purpleSkyEnabled = Config.purpleSkyEnabled or false,
+		skyMode = Config.skyMode,
+		autoStealVersion = Config.autoStealVersion or "V1",
+		infJumpMode = Config.infJumpMode or "manual",
+		dropType = Config.dropType or "Jump",
+		speedToggled = Config.speedToggled,
+		laggerEnabled = Config.laggerEnabled,
+		stealToggled = Config.stealToggled,
+		speedMethod = Config.speedMethod or "V2",
+		v2UseCarry = Config.v2UseCarry or false,
+		stackButtonsHidden = Config.stackButtonsHidden,
+		hiddenQuickButtons = fn15(Config.hiddenQuickButtons or {}),
+		quickButtonPositions = fn15(Config._savedQuickButtonPositions or {}),
+		quickLayoutVersion = Config._quickLayoutVersion or 4,
+		lockButtonsEnabled = Config.lockButtonsEnabled,
+		uiScale = Config.uiScale,
+	}
+end
+local tbl30, tbl31, approachSpeed, batLaggerSavedApproach = {}
+local n15, v21, v22, n16, str, n17 = 58
+approachSpeed, n16, str, n17 = 35, 290, "HIGH", 265
+local function fn32(arg)
+	if not arg then
+		return nil
+	end
+	local tbl32 = {}
+	for k, v23 in pairs(arg) do
+		if v23 and v23.type and v23.value then
+			local value
+			local kind = typeof(v23.value)
+			if kind == "string" then
+				value = v23.value
+			else
+				local ok, result = pcall(function()
+					return v23.value.Name
+				end)
+				value = if ok and typeof(result) == "string" then result else value
+			end
+			if value then
+				tbl32[k] = { type = v23.type, value = value }
+			end
+		end
+	end
+	return tbl32
+end
+local function fn33()
+	local function fn34(arg)
+		if not arg or not arg.type or not arg.value then
+			return nil
+		end
+		local ok, result = pcall(function()
+			return arg.value.Name
+		end)
+		if ok and result then
+			return { type = arg.type, value = result }
+		end
+		return nil
+	end
+	local tbl32 = {
+		normalSpeed = Config.normalSpeed or 60,
+		carrySpeed = Config.carrySpeed or 30,
+		laggerSpeed = Config.laggerSpeed or 10.1,
+		normalStealSpeed = Config.normalStealSpeed or 30,
+		laggerStealSpeed = Config.laggerStealSpeed or 10.1,
+		carryStealSpeed = Config.carryStealSpeed or 20,
+		stealRadius = tbl17.StealRadius or 20,
+		stealFreezePercent = Config.stealFreezePercent or 85,
+		v3FillDuration = v3FillDuration or 0.1,
+		uiScale = Config.uiScale or 1,
+		stackButtonsHidden = Config.stackButtonsHidden == true,
+		hiddenQuickButtons = fn15(Config.hiddenQuickButtons or {}),
+		quickButtonPositions = fn15(Config._savedQuickButtonPositions or {}),
+		quickLayoutVersion = Config._quickLayoutVersion or 4,
+		lockButtonsEnabled = Config.lockButtonsEnabled or false,
+		uiLocked = Config.uiLocked or false,
+		fontStyle = Config.fontStyle or "VX7 Original",
+		billboardScale = Config.billboardScale or 1,
+		statsBarEnabled = Config.statsBarEnabled ~= false,
+		speedKey = tbl11.speed and tbl11.speed.Name or (Config._speedKeyCleared and "_cleared_" or nil),
+		guiHideKey = tbl11.guiHide and tbl11.guiHide.Name or "_cleared_",
+		autoPlayKey = tbl11.autoPlay and tbl11.autoPlay.Name or nil,
+		autoLeftKey = tbl11.autoLeft and tbl11.autoLeft.Name or nil,
+		autoRightKey = tbl11.autoRight and tbl11.autoRight.Name or nil,
+		laggerKey = tbl11.lagger and tbl11.lagger.Name or nil,
+		dropKey = tbl11.drop and tbl11.drop.Name or nil,
+		tpDownKey = tbl11.tpDown and tbl11.tpDown.Name or "_cleared_",
+		aimbotKey = tbl11.aimbot and tbl11.aimbot.Name or nil,
+		laggerFuncKey = tbl11.laggerFunc and tbl11.laggerFunc.Name or nil,
+		batLaggerKey = tbl11.batLagger and tbl11.batLagger.Name or nil,
+		batTpKey = tbl11.batTp and tbl11.batTp.Name or nil,
+		smartBatTpKey = tbl11.smartBatTp and tbl11.smartBatTp.Name or nil,
+		infJump = Config.infJumpEnabled,
+		antiRagdoll = Config.antiRagdollEnabled,
+		antiRagdollEnabled = Config.antiRagdollEnabled,
+		antiLag = Config.antiLagEnabled,
+		potatoGraphics = Config.potatoGraphicsEnabled,
+		medusaCounter = Config.medusaCounterEnabled,
+		batAimbotToggled = Config.batAimbotToggled,
+		autoSwingEnabled = Config.autoSwingEnabled or false,
+		autoStealEnabled = Config.autoStealEnabled,
+		autoStealStopWhenHit = Config.autoStealStopWhenHit == true,
+		autoStealHitPauseSeconds = Config.autoStealHitPauseSeconds or 1.3,
+		batLaggerToggled = Config.batLaggerToggled,
+		autoCarryOnSteal = Config.autoCarrySpeedEnabled ~= false,
+		autoTPDownEnabled = Config.autoTPDownEnabled == true,
+		autoTPDownHeight = Config.autoTPDownHeight or 20,
+		musicSoundEnabled = Config.musicSoundEnabled,
+		skipIntro = Config.skipIntro,
+		skipIntroConfigured = Config.skipIntroConfigured,
+		musicVolume = Config.musicVolume or 0.5,
+		musicCurrentSong = Config.musicCurrentSong or 0,
+		holdJumpEnabled = Config.holdJumpEnabled,
+		ragdollTimerEnabled = Config.ragdollTimerEnabled or false,
+		enemyRagdollTimerEnabled = Config.enemyRagdollTimerEnabled or false,
+		safeModeEnabled = Config.safeModeEnabled ~= false,
+		dropBrainrotMode = Config.dropBrainrotMode == true,
+		warningE01Enabled = Config.warningE01Enabled ~= false,
+		warningE01Scale = Config.warningE01Scale or 1,
+		batTpNoCollision = Config.batTpNoCollision == true,
+		speedToggled = Config.speedToggled,
+		laggerEnabled = Config.laggerEnabled,
+		stealToggled = Config.stealToggled,
+		speedMethod = Config.speedMethod or "V2",
+		v2UseCarry = Config.v2UseCarry or false,
+		autoLeftEnabled = Config.autoLeftEnabled,
+		autoRightEnabled = Config.autoRightEnabled,
+		dropEnabled = Config.dropEnabled or false,
+		instaReset = false,
+		duelAntiDieEnabled = Config.duelAntiDieEnabled or false,
+		autoDeathReset = Config.autoDeathResetEnabled or false,
+		unwalkEnabled = Config.unwalkEnabled or false,
+		tryhardAnimEnabled = Config.tryhardAnimEnabled or false,
+		tryhardAnimPack = Config.tryhardAnimPack or 1,
+		playerAnimEnabled = Config.playerAnimEnabled or false,
+		playerAnimMode = Config.playerAnimMode or "Unwalk",
+		batCounterEnabled = Config.batCounterEnabled or false,
+		batTpEnabled = Config.batTpEnabled or false,
+		smartBatTpEnabled = Config.smartBatTpEnabled or false,
+		smartBatTpAuto = Config.smartBatTpAuto ~= false,
+		laggerFuncEnabled = Config.laggerFuncEnabled or false,
+		espBoxEnabled = Config.espBoxEnabled or false,
+		espLineEnabled = Config.espLineEnabled or false,
+		espLineOrigin = Config.espLineOrigin or "Below",
+		espPlayerEnabled = Config.espPlayerEnabled or false,
+		espInfoEnabled = Config.espInfoEnabled or false,
+		skinGalaxyEnabled = Config.skinGalaxyEnabled or false,
+		skinCustomEnabled = Config.skinCustomEnabled or false,
+		skinChangerSelection = Config.skinChangerSelection or 1,
+		keybindBoardEnabled = Config.keybindBoardEnabled or false,
+		infJumpMode = Config.infJumpMode or "manual",
+		antiRagdollMode = Config.antiRagdollMode or "V1",
+		speedKeyNormal = fn34(tbl12.Normal),
+		speedKeyLagger = fn34(tbl12.Lagger),
+		speedKeyLaggerCleared = Config._speedKeyLaggerCleared or false,
+		speedKeyCarry = fn34(tbl12.Carry),
+		toggleKeybinds = fn32(tbl30),
+		batLaggerSpeed = approachSpeed,
+		laggerPower = n16,
+		autoLaggerSpd = Config.autoLaggerSpd or false,
+		laggerMode = str,
+		laggerTableIncrease = n17,
+		aimbotBatRange = tbl31 and tbl31.BAT_RANGE or 2.6,
+		aimbotApproachSpeed = tbl31
+				and (Config.batLaggerToggled and (batLaggerSavedApproach or tbl31.APPROACH_SPEED) or tbl31.APPROACH_SPEED)
+			or 58,
+		batAimbotOwnSpeed = n15,
+		silentBatAim = Config.silentBatAim or false,
+		sbaEnemyPerm = Config.sbaEnemyPerm,
+		sbaEnemyRadio = Config.sbaEnemyRadio or false,
+		sbaRange = Config.sbaRange or 50,
+		sbaTurnSpeed = Config.sbaTurnSpeed or 30,
+		batLaggerSavedApproach = batLaggerSavedApproach,
+		fovEnabled = Config.fovEnabled or false,
+		fovValue = Config.fovValue or 80,
+		resEnabled = Config.resEnabled or false,
+		resFov = Config.resFov or 100,
+		autoPlayMode = Config.autoPlayMode or "full",
+		autoPlayVersion = Config.autoPlayVersion or "V2",
+		batCounterMode = Config.batCounterMode or "Classic",
+		autoStealVersion = Config.autoStealVersion or "V1",
+		batAimbotVersion = Config.batAimbotVersion or "Normal",
+		batTpVersion = Config.batTpVersion or "V2",
+		batTpStuds = Config._getBatTpStuds(),
+		batTpStudsV1 = Config._getBatTpStuds("V1"),
+		smartBatTpDistance = Config.smartBatTpDistance or 9,
+		smartBatTpSpeed = Config.smartBatTpSpeed or 42,
+		purpleSkyEnabled = Config.purpleSkyEnabled or false,
+		skyMode = Config.skyMode or nil,
+		dropType = Config.dropType or "Jump",
+		popupScale = Config.popupScale or 1,
+		floatScale = Config.floatScale or 0.7,
+		stealBarScale = Config.stealBarScale or 1,
+		stealBarStyle = Config.stealBarStyle or "Compact",
+		buttonShape = Config.buttonShape or "Square",
+		openPopups = Config._openPopups,
+		activeFloats = tbl5,
+		mainBgIndex = n13,
+		bgMode = Config.bgMode or "image",
+	}
+	tbl32.binds = {
+		direct = {
+			speedKey = tbl32.speedKey,
+			guiHideKey = tbl32.guiHideKey,
+			autoPlayKey = tbl32.autoPlayKey,
+			autoLeftKey = tbl32.autoLeftKey,
+			autoRightKey = tbl32.autoRightKey,
+			laggerKey = tbl32.laggerKey,
+			dropKey = tbl32.dropKey,
+			tpDownKey = tbl32.tpDownKey,
+			aimbotKey = tbl32.aimbotKey,
+			laggerFuncKey = tbl32.laggerFuncKey,
+			batLaggerKey = tbl32.batLaggerKey,
+			batTpKey = tbl32.batTpKey,
+			smartBatTpKey = tbl32.smartBatTpKey,
+		},
+		speed = {
+			Normal = tbl32.speedKeyNormal,
+			Lagger = tbl32.speedKeyLagger,
+			Carry = tbl32.speedKeyCarry,
+			laggerCleared = tbl32.speedKeyLaggerCleared,
+		},
+		toggles = tbl32.toggleKeybinds or {},
+	}
+	local ok, result = pcall(function()
+		return HttpService:JSONEncode(tbl32)
+	end)
+	if ok and result then
+		pcall(function()
+			writefile_("vx7/Vx7Config.json", result)
+		end)
+	else
+		tbl32.toggleKeybinds = nil
+		local ok2, result2 = pcall(function()
+			return HttpService:JSONEncode(tbl32)
+		end)
+		if ok2 and result2 then
+			pcall(function()
+				writefile_("vx7/Vx7Config.json", result2)
+			end)
+		end
+	end
+	local v23 = fn32(tbl30)
+	if v23 then
+		local ok2, result2 = pcall(function()
+			return HttpService:JSONEncode({ toggleKeybinds = v23 })
+		end)
+		if ok2 and result2 then
+			pcall(function()
+				writefile_("vx7/Vx7Keybinds.json", result2)
+			end)
+		end
+	end
+end
+local flag4 = false
+local function fn34()
+	if flag4 then
+		return
+	end
+	flag4 = true
+	task.delay(0.5, function()
+		flag4 = false
+		fn33()
+	end)
+end
+local function fn35()
+	flag4 = false
+	fn33()
+end
+local tbl32, tbl33 =
+	{
+		[Enum.KeyCode.W] = true,
+		[Enum.KeyCode.A] = true,
+		[Enum.KeyCode.S] = true,
+		[Enum.KeyCode.D] = true,
+		[Enum.KeyCode.Up] = true,
+		[Enum.KeyCode.Left] = true,
+		[Enum.KeyCode.Down] = true,
+		[Enum.KeyCode.Right] = true,
+	}, {
+		[Enum.KeyCode.ButtonA] = true,
+		[Enum.KeyCode.ButtonB] = true,
+		[Enum.KeyCode.ButtonX] = true,
+		[Enum.KeyCode.ButtonY] = true,
+		[Enum.KeyCode.ButtonL1] = true,
+		[Enum.KeyCode.ButtonL2] = true,
+		[Enum.KeyCode.ButtonL3] = true,
+		[Enum.KeyCode.ButtonR1] = true,
+		[Enum.KeyCode.ButtonR2] = true,
+		[Enum.KeyCode.ButtonR3] = true,
+		[Enum.KeyCode.ButtonSelect] = true,
+		[Enum.KeyCode.ButtonStart] = true,
+		[Enum.KeyCode.DPadUp] = true,
+		[Enum.KeyCode.DPadDown] = true,
+		[Enum.KeyCode.DPadLeft] = true,
+		[Enum.KeyCode.DPadRight] = true,
+	}
+local function fn36(arg, arg2)
+	if not arg or not arg2 or not arg2.value then
+		return false
+	end
+	if tbl33[arg.KeyCode] and arg.KeyCode == arg2.value then
+		return true
+	end
+	if arg2.type == "key" then
+		return arg.UserInputType == Enum.UserInputType.Keyboard and arg.KeyCode == arg2.value
+	end
+	if arg2.type == "mouse" then
+		return arg.UserInputType == arg2.value
+	end
+	return false
+end
+local tbl34 = {
+	"speed",
+	"guiHide",
+	"autoPlay",
+	"autoLeft",
+	"autoRight",
+	"lagger",
+	"drop",
+	"tpDown",
+	"aimbot",
+	"laggerFunc",
+	"batLagger",
+	"batTp",
+	"smartBatTp",
+}
+local function fn37(arg, arg2, arg3, arg4)
+	if arg2 == nil then
+		return
+	end
+	if arg == "key" or arg == "gamepad" then
+		for i, v23 in ipairs(tbl34) do
+			if v23 ~= arg3 and tbl11[v23] == arg2 then
+				tbl11[v23] = nil
+			end
+		end
+		if type(tbl12) == "table" then
+			for k, v23 in pairs(tbl12) do
+				if k ~= arg4 and type(v23) == "table" and v23.value == arg2 then
+					tbl12[k] = nil
+				end
+			end
+		end
+	end
+	for k, v23 in pairs(tbl30) do
+		if k ~= arg3 and v23 and v23.type == arg and v23.value == arg2 then
+			tbl30[k] = nil
+			if tbl7[k] then
+				tbl7[k].Text = "---"
+			end
+			if handlers2[k] then
+				handlers2[k]()
+			end
+		end
+	end
+	if arg3 then
+		for k, v23 in pairs(tbl8) do
+			arg4 = if v23 == arg3 then k else if k == arg3 then v23 else nil
+			if arg4 and tbl30[arg4] and tbl30[arg4].type == arg and tbl30[arg4].value == arg2 then
+				tbl30[arg4] = nil
+				if tbl7[arg4] then
+					tbl7[arg4].Text = "---"
+				end
+				if handlers2[arg4] then
+					handlers2[arg4]()
+				end
+			end
+		end
+	end
+	pcall(function()
+		if Config._refreshKeybindDisplays then
+			Config._refreshKeybindDisplays()
+		end
+	end)
+end
+local function fn38(arg)
+	if arg == "instaReset" then
+		return function()
+			pcall(instareset)
+		end, function() end
+	elseif arg == "aimbot" or arg == "batAimbot" then
+		return function()
+			local batAimbotToggled = not Config.batAimbotToggled
+			if batAimbotToggled then
+				if Config.autoLeftEnabled then
+					pcall(function()
+						stopAutoLeft()
+					end)
+					Config.autoLeftEnabled = false
+					if stackBtnRefs.autoLeft then
+						stackBtnRefs.autoLeft.setOn(false)
+					end
+				end
+				if Config.autoRightEnabled then
+					pcall(function()
+						stopAutoRight()
+					end)
+					Config.autoRightEnabled = false
+					if stackBtnRefs.autoRight then
+						stackBtnRefs.autoRight.setOn(false)
+					end
+				end
+				if Config.dropEnabled then
+					pcall(function()
+						stopDropBrainrot()
+					end)
+					Config.dropEnabled = false
+					if stackBtnRefs.drop then
+						stackBtnRefs.drop.setOn(false)
+					end
+				end
+			end
+			Config.batAimbotToggled = batAimbotToggled
+			if stackBtnRefs.aimbot then
+				stackBtnRefs.aimbot.setOn(batAimbotToggled)
+			end
+			if setBatAimbot then
+				setBatAimbot(batAimbotToggled)
+			end
+			if batAimbotToggled then
+				pcall(v)
+			else
+				v2()
+			end
+			fn34()
+		end, function() end
+	elseif arg == "laggerFunc" then
+		return function()
+			local laggerFuncEnabled = not Config.laggerFuncEnabled
+			Config.laggerFuncEnabled = laggerFuncEnabled
+			if laggerFuncEnabled then
+				pcall(v3)
+			else
+				pcall(v4)
+			end
+			if setLagger then
+				setLagger(laggerFuncEnabled)
+			end
+			fn34()
+		end, function() end
+	elseif arg == "antibat" then
+		return function()
+			pcall(toggleAntiBat)
+		end, function() end
+	elseif arg == "batTp" then
+		return function()
+			local batTpEnabled = not Config.batTpEnabled
+			if setBatTp then
+				setBatTp(batTpEnabled)
+			else
+				Config.batTpEnabled = batTpEnabled
+				if batTpEnabled then
+					pcall(startBatTp)
+				else
+					pcall(stopBatTp)
+				end
+			end
+			fn34()
+		end, function() end
+	elseif arg == "batLagger" then
+		return function()
+			local batLaggerToggled = not Config.batLaggerToggled
+			Config.batLaggerToggled = batLaggerToggled
+			Config.batAimbotToggled = batLaggerToggled
+			fn14()
+			if stackBtnRefs.aimbot then
+				stackBtnRefs.aimbot.setOn(batLaggerToggled)
+			end
+			if setBatAimbot then
+				setBatAimbot(batLaggerToggled)
+			end
+			if batLaggerToggled then
+				pcall(v3)
+				pcall(v)
+			else
+				pcall(v4)
+				v2()
+			end
+			fn34()
+		end, function() end
+	elseif arg == "smartBatTp" then
+		return function()
+			local smartBatTpEnabled = not Config.smartBatTpEnabled
+			if Config._setSmartBatTp then
+				Config._setSmartBatTp(smartBatTpEnabled)
+			else
+				Config.smartBatTpEnabled = smartBatTpEnabled
+				if Config._smartBatTp then
+					if smartBatTpEnabled then
+						pcall(function()
+							Config._smartBatTp.start()
+						end)
+					else
+						pcall(function()
+							Config._smartBatTp.stop()
+						end)
+					end
+				end
+			end
+			fn34()
+		end, function() end
+	elseif arg == "drop" then
+		return function()
+			if Config.dropEnabled then
+				pcall(stopDropBrainrot)
+			else
+				pcall(runDropBrainrot)
+			end
+			if setDropBrainrot then
+				setDropBrainrot(Config.dropEnabled)
+			end
+			fn34()
+		end, function() end
+	elseif arg == "autoPlay" then
+		return function()
+			if Config._isAutoplayActive and (Config._isAutoplayActive()) then
+				pcall(stopAutoPlay)
+			else
+				pcall(startAutoPlay)
+			end
+			fn34()
+		end, function() end
+	elseif arg == "autoLeft" then
+		return function()
+			if Config.autoLeftEnabled then
+				pcall(stopAutoPlay)
+			else
+				pcall(startAutoLeft)
+			end
+			fn34()
+		end, function() end
+	elseif arg == "autoRight" then
+		return function()
+			if Config.autoRightEnabled then
+				pcall(stopAutoPlay)
+			else
+				pcall(startAutoRight)
+			end
+			fn34()
+		end, function() end
+	end
+	return nil, nil
+end
+local function fn39()
+	if not isfile_("vx7/Vx7Config.json") then
+		return true
+	end
+	local data = tbl[1][6][tbl[1][3]]
+	local v23 = data
+	tbl[1][6][tbl[1][3]] = nil
+	if type(v23) ~= "table" then
+		local ok, result = pcall(readfile_, "vx7/Vx7Config.json")
+		if not ok or type(result) ~= "string" or result == "" then
+			return false
+		end
+		if not pcall(function()
+			data = HttpService:JSONDecode(result)
+		end) or type(v23) ~= "table" then
+			return false
+		end
+	end
+	local tbl35 = {
+		v3FillDuration = "number",
+		popupScale = "number",
+		billboardScale = "number",
+		musicVolume = "number",
+		musicCurrentSong = "number",
+		batLaggerSpeed = "number",
+		laggerPower = "number",
+		laggerTableIncrease = "number",
+		aimbotBatRange = "number",
+		aimbotApproachSpeed = "number",
+		batAimbotOwnSpeed = "number",
+		sbaRange = "number",
+		sbaTurnSpeed = "number",
+		batLaggerSavedApproach = "number",
+		batTpStuds = "number",
+		batTpStudsV1 = "number",
+		mainBgIndex = "number",
+		quickLayoutVersion = "number",
+		uiLocked = "boolean",
+		statsBarEnabled = "boolean",
+		batTpNoCollision = "boolean",
+		batLaggerToggled = "boolean",
+		autoSwingEnabled = "boolean",
+		speedKeyLaggerCleared = "boolean",
+		autoLaggerSpd = "boolean",
+		silentBatAim = "boolean",
+		sbaEnemyPerm = "boolean",
+		sbaEnemyRadio = "boolean",
+		speedKey = "string",
+		guiHideKey = "string",
+		autoPlayKey = "string",
+		autoLeftKey = "string",
+		autoRightKey = "string",
+		laggerKey = "string",
+		dropKey = "string",
+		tpDownKey = "string",
+		aimbotKey = "string",
+		laggerFuncKey = "string",
+		batLaggerKey = "string",
+		batTpKey = "string",
+		smartBatTpKey = "string",
+		laggerMode = "string",
+		autoPlayMode = "string",
+		autoPlayVersion = "string",
+		batCounterMode = "string",
+		batAimbotVersion = "string",
+		batTpVersion = "string",
+		bgMode = "string",
+		fontStyle = "string",
+		speedKeyNormal = "table",
+		speedKeyLagger = "table",
+		speedKeyCarry = "table",
+		toggleKeybinds = "table",
+		binds = "table",
+		openPopups = "table",
+		activeFloats = "table",
+		quickButtonPositions = "table",
+	}
+	for k, v24 in pairs(v23) do
+		local v25 = v13 and v13[k]
+		local kind = v25 ~= nil and (type(v25)) or tbl35[k]
+		if kind and type(v24) ~= kind then
+			v23[k] = nil
+		elseif
+			type(v24) == "number"
+			and (v24 ~= v24 or v24 == math.huge or v24 == -math.huge or math.abs(v24) > 1000000000)
+		then
+			v23[k] = nil
+		end
+	end
+	if type(v23.openPopups) == "table" then
+		local openPopups = {}
+		for i, openPopup in ipairs(v23.openPopups) do
+			if type(openPopup) == "string" then
+				table.insert(openPopups, openPopup)
+			end
+		end
+		v23.openPopups = openPopups
+	end
+	if type(v23.activeFloats) == "table" then
+		local activeFloats = {}
+		for i, activeFloat in ipairs(v23.activeFloats) do
+			if type(activeFloat) == "table" and type(activeFloat.key) == "string" then
+				table.insert(activeFloats, activeFloat)
+			end
+		end
+		v23.activeFloats = activeFloats
+	end
+	if type(v23.binds) == "table" then
+		for k, v24 in pairs(type(v23.binds.direct) == "table" and v23.binds.direct or {}) do
+			local v25 = tbl35[k]
+			if v23[k] == nil and (not v25 or type(v24) == v25) then
+				v23[k] = v24
+			end
+		end
+		local speed = type(v23.binds.speed) == "table" and v23.binds.speed or {}
+		if v23.speedKeyNormal == nil and type(speed.Normal) == "table" then
+			v23.speedKeyNormal = speed.Normal
+		end
+		if v23.speedKeyLagger == nil and type(speed.Lagger) == "table" then
+			v23.speedKeyLagger = speed.Lagger
+		end
+		if v23.speedKeyCarry == nil and type(speed.Carry) == "table" then
+			v23.speedKeyCarry = speed.Carry
+		end
+		if v23.speedKeyLaggerCleared == nil and type(speed.laggerCleared) == "boolean" then
+			v23.speedKeyLaggerCleared = speed.laggerCleared
+		end
+		if v23.toggleKeybinds == nil and type(v23.binds.toggles) == "table" then
+			v23.toggleKeybinds = v23.binds.toggles
+		end
+	end
+	if v23.normalSpeed then
+		Config.normalSpeed = v23.normalSpeed
+	end
+	if v23.carrySpeed then
+		Config.carrySpeed = v23.carrySpeed
+	end
+	if v23.laggerSpeed then
+		Config.laggerSpeed = v23.laggerSpeed
+	end
+	if v23.normalStealSpeed then
+		Config.normalStealSpeed = v23.normalStealSpeed
+	end
+	if v23.laggerStealSpeed then
+		Config.laggerStealSpeed = v23.laggerStealSpeed
+	end
+	if v23.carryStealSpeed then
+		Config.carryStealSpeed = v23.carryStealSpeed
+	end
+	if normalStealBox and normalBox then
+		normalStealBox.Text = tostring(Config.normalStealSpeed)
+		normalBox.Text = tostring(Config.normalSpeed)
+	end
+	if laggerStealBox and laggerBox then
+		laggerStealBox.Text = tostring(Config.laggerStealSpeed)
+		laggerBox.Text = tostring(Config.laggerSpeed)
+	end
+	if carryStealBox and carryBox then
+		carryStealBox.Text = tostring(Config.carryStealS
+Preview truncated for large file
